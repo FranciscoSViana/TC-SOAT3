@@ -1,8 +1,8 @@
 package com.tech.challenge.soat.adapters.driver.v1;
 
 
-import com.tech.challenge.soat.adapters.driver.v1.model.ClienteModel;
-import com.tech.challenge.soat.adapters.driver.v1.model.input.ClienteInput;
+import com.tech.challenge.soat.adapters.driver.v1.model.response.ClienteResponse;
+import com.tech.challenge.soat.adapters.driver.v1.model.request.ClienteRequest;
 import com.tech.challenge.soat.adapters.mapper.ClienteMapper;
 import com.tech.challenge.soat.core.applications.service.ClienteService;
 import com.tech.challenge.soat.core.domain.Cliente;
@@ -26,7 +26,7 @@ public class ClienteController {
     private final ClienteMapper clienteMapper;
 
     @GetMapping
-    public ResponseEntity<Collection<ClienteModel>> todosClientes() {
+    public ResponseEntity<Collection<ClienteResponse>> todosClientes() {
 
         List<Cliente> clientes = clienteService.buscarTodos();
 
@@ -34,37 +34,37 @@ public class ClienteController {
     }
 
     @GetMapping("/{cpf}")
-    public ResponseEntity<ClienteModel> buscarPorCpf(@PathVariable("cpf") String cpf) {
+    public ResponseEntity<ClienteResponse> buscarPorCpf(@PathVariable("cpf") String cpf) {
 
         Cliente cliente = clienteService.buscarPorCpf(cpf);
 
-        ClienteModel response = clienteMapper.clienteToClienteModel(cliente);
+        ClienteResponse response = clienteMapper.clienteToClienteModel(cliente);
 
         return ResponseEntity.ok(response);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<ClienteModel> salvarCliente(@RequestBody @Valid ClienteInput clienteInput) {
+    public ResponseEntity<ClienteResponse> salvarCliente(@RequestBody @Valid ClienteRequest clienteRequest) {
 
 
-        Cliente clienteSalvo = clienteService.salvar(clienteInput);
+        Cliente clienteSalvo = clienteService.salvar(clienteRequest);
 
-        ClienteModel response = clienteMapper.clienteToClienteModel(clienteSalvo);
+        ClienteResponse response = clienteMapper.clienteToClienteModel(clienteSalvo);
 
         return ResponseEntity.ok(response);
     }
 
     @PutMapping("/{clienteId}")
-    public ResponseEntity<ClienteModel> atualizar(@PathVariable Long clienteId, @RequestBody ClienteInput clienteInput) {
+    public ResponseEntity<ClienteResponse> atualizar(@PathVariable Long clienteId, @RequestBody ClienteRequest clienteRequest) {
 
         Cliente clienteAtual = clienteService.buscarOuFalhar(clienteId);
 
-        clienteMapper.copyToDomainObject(clienteInput, clienteAtual);
+        clienteMapper.copyToDomainObject(clienteRequest, clienteAtual);
 
         clienteAtual = clienteService.atualizar(clienteAtual);
 
-        ClienteModel response = clienteMapper.clienteToClienteModel(clienteAtual);
+        ClienteResponse response = clienteMapper.clienteToClienteModel(clienteAtual);
 
         return ResponseEntity.ok(response);
     }

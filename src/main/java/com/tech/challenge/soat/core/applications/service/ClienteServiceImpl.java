@@ -1,6 +1,6 @@
 package com.tech.challenge.soat.core.applications.service;
 
-import com.tech.challenge.soat.adapters.driver.v1.model.input.ClienteInput;
+import com.tech.challenge.soat.adapters.driver.v1.model.request.ClienteRequest;
 import com.tech.challenge.soat.core.applications.factory.ClienteFactory;
 import com.tech.challenge.soat.core.applications.ports.ClienteRepository;
 import com.tech.challenge.soat.core.domain.Cliente;
@@ -30,9 +30,9 @@ public class ClienteServiceImpl implements ClienteService{
     }
 
     @Override
-    public Cliente salvar(ClienteInput clienteInput) {
+    public Cliente salvar(ClienteRequest clienteRequest) {
 
-        Cliente clienteNovo = clienteFactory.novo(clienteInput);
+        Cliente clienteNovo = clienteFactory.novo(clienteRequest);
 
         return clienteRepository.save(clienteNovo);
     }

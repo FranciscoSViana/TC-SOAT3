@@ -1,6 +1,6 @@
 package com.tech.challenge.soat.core.applications.factory;
 
-import com.tech.challenge.soat.adapters.driver.v1.model.input.ClienteInput;
+import com.tech.challenge.soat.adapters.driver.v1.model.request.ClienteRequest;
 import com.tech.challenge.soat.core.domain.Cliente;
 import com.tech.challenge.soat.core.exception.NegocioException;
 import com.tech.challenge.soat.shared.util.provider.DataProvider;
@@ -22,9 +22,9 @@ public class ClienteFactoryImpl implements ClienteFactory {
 
 
     @Override
-    public Cliente novo(ClienteInput clienteInput) {
+    public Cliente novo(ClienteRequest clienteRequest) {
 
-        if(isNull(clienteInput)) {
+        if(isNull(clienteRequest)) {
             throw new NegocioException(CLIENTE_NAO_PODE_SER_NULO);
         }
 
@@ -32,9 +32,9 @@ public class ClienteFactoryImpl implements ClienteFactory {
                 .id(uuidProvider.geradorUUID())
                 .dataHoraCriacao(dataProvider.obterDataHoraAtual())
                 .situacao(Boolean.TRUE)
-                .nome(clienteInput.getNome())
-                .cpf(clienteInput.getCpf())
-                .email(clienteInput.getEmail())
+                .nome(clienteRequest.getNome())
+                .cpf(clienteRequest.getCpf())
+                .email(clienteRequest.getEmail())
                 .build();
     }
 }

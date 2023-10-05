@@ -1,11 +1,11 @@
-package com.tech.challenge.soat.adapters.driver.v1.model.input;
+package com.tech.challenge.soat.adapters.driver.v1.model.request;
 
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
-public class ClienteInput {
+public class ClienteRequest {
 
     private String nome;
     private String cpf;
