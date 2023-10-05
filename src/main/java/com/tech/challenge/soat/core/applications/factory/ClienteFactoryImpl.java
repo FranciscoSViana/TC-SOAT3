@@ -15,8 +15,9 @@ import static java.util.Objects.isNull;
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class ClienteFactoryImpl implements ClienteFactory {
 
-    private UUIDProvider uuidProvider;
-    private DataProvider dataProvider;
+    private final UUIDProvider uuidProvider;
+
+    private final DataProvider dataProvider;
     public static final String CLIENTE_NAO_PODE_SER_NULO = "Cliente não pode ser nulo.";
 
 

@@ -7,6 +7,7 @@ import com.tech.challenge.soat.adapters.mapper.ClienteMapper;
 import com.tech.challenge.soat.core.applications.service.ClienteService;
 import com.tech.challenge.soat.core.domain.Cliente;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,13 +18,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("v1/clientes")
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class ClienteController {
 
-    @Autowired
-    private ClienteService clienteService;
+    private final ClienteService clienteService;
 
-    @Autowired
-    private ClienteMapper clienteMapper;
+    private final ClienteMapper clienteMapper;
 
     @GetMapping
     public ResponseEntity<Collection<ClienteModel>> todosClientes() {

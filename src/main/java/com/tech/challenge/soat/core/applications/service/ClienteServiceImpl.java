@@ -15,9 +15,9 @@ import java.util.List;
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class ClienteServiceImpl implements ClienteService{
 
-    private ClienteRepository clienteRepository;
+    private final ClienteRepository clienteRepository;
 
-    private ClienteFactory clienteFactory;
+    private final ClienteFactory clienteFactory;
 
     @Override
     public List<Cliente> buscarTodos() {
