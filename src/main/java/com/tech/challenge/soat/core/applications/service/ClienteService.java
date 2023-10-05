@@ -1,37 +1,23 @@
 package com.tech.challenge.soat.core.applications.service;
 
-import com.tech.challenge.soat.core.applications.ports.ClienteRepository;
+import com.tech.challenge.soat.adapters.driver.v1.model.input.ClienteInput;
 import com.tech.challenge.soat.core.domain.Cliente;
-import com.tech.challenge.soat.core.domain.exception.ClienteNaoEncontradoException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-public class ClienteService {
 
-    @Autowired
-    private ClienteRepository clienteRepository;
+public interface ClienteService {
 
-    public List<Cliente> todosClientes() {
-        return clienteRepository.findAll();
-    }
 
-    public Cliente buscarPorCpf(String cpf) {
-        return clienteRepository.findByCpf(cpf);
-    }
+    List<Cliente> buscarTodos();
 
-    public Cliente salvarCliente(Cliente cliente) {
-        return clienteRepository.save(cliente);
-    }
+    Cliente buscarPorCpf(String cpf);
 
-    public Cliente buscarOuFalhar(Long clienteId) {
-        return clienteRepository.findById(clienteId)
-                .orElseThrow(() -> new ClienteNaoEncontradoException(clienteId));
-    }
+    Cliente salvar(ClienteInput clienteInput);
 
-    public void excluirCliente(Long clienteId) {
-        clienteRepository.deleteById(clienteId);
-    }
+    Cliente atualizar(Cliente cliente);
+
+    Cliente buscarOuFalhar(Long clienteId);
+
+    void excluirCliente(Long clienteId);
 }
