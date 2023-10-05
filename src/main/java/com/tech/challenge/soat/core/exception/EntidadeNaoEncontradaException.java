@@ -1,4 +1,4 @@
-package com.tech.challenge.soat.core.domain.exception;
+package com.tech.challenge.soat.core.exception;
 
 public abstract class EntidadeNaoEncontradaException extends NegocioException{
     private static final long serialVersionUID = 1L;

@@ -1,4 +1,4 @@
-package com.tech.challenge.soat.core.modelmapper;
+package com.tech.challenge.soat.shared.config;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
