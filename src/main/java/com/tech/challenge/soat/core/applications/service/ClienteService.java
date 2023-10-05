@@ -4,6 +4,7 @@ import com.tech.challenge.soat.adapters.driver.v1.model.request.ClienteRequest;
 import com.tech.challenge.soat.core.domain.Cliente;
 
 import java.util.List;
+import java.util.UUID;
 
 
 public interface ClienteService {
@@ -17,7 +18,7 @@ public interface ClienteService {
 
     Cliente atualizar(Cliente cliente);
 
-    Cliente buscarOuFalhar(Long clienteId);
+    Cliente buscarOuFalhar(UUID clienteId);
 
-    void excluirCliente(Long clienteId);
+    void excluirCliente(UUID clienteId);
 }

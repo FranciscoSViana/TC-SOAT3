@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("v1/clientes")
@@ -56,7 +57,7 @@ public class ClienteController {
     }
 
     @PutMapping("/{clienteId}")
-    public ResponseEntity<ClienteResponse> atualizar(@PathVariable Long clienteId, @RequestBody ClienteRequest clienteRequest) {
+    public ResponseEntity<ClienteResponse> atualizar(@PathVariable UUID clienteId, @RequestBody ClienteRequest clienteRequest) {
 
         Cliente clienteAtual = clienteService.buscarOuFalhar(clienteId);
 
@@ -70,7 +71,7 @@ public class ClienteController {
     }
 
     @DeleteMapping("/{clienteId}")
-    public void excluirCliente(@PathVariable Long clienteId) {
+    public void excluirCliente(@PathVariable UUID clienteId) {
         clienteService.excluirCliente(clienteId);
     }
 }

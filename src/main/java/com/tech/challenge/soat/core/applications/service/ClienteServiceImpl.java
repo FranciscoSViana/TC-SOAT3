@@ -10,10 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class ClienteServiceImpl implements ClienteService{
+
+    public static final String CLIENTE_NAO_ENCONTRADO_COM_O_ID = "Cliente não encontrado com o ID: ";
 
     private final ClienteRepository clienteRepository;
 
@@ -43,14 +47,23 @@ public class ClienteServiceImpl implements ClienteService{
     }
 
     @Override
-    public Cliente buscarOuFalhar(Long clienteId) {
-        return clienteRepository.findById(clienteId)
-                .orElseThrow(() -> new ClienteNaoEncontradoException(clienteId));
+    public Cliente buscarOuFalhar(UUID id) {
+        return clienteRepository.findById(id)
+                .orElseThrow(() -> new ClienteNaoEncontradoException(String.valueOf(id)));
     }
 
     @Override
-    public void excluirCliente(Long clienteId) {
-        clienteRepository.deleteById(clienteId);
+    public void excluirCliente(UUID id) {
+
+        clienteRepository.findById(id).ifPresentOrElse(
+                cliente -> {
+                    cliente.setSituacao(Boolean.FALSE);
+                    clienteRepository.save(cliente);
+                },
+                () -> {
+                    throw new ClienteNaoEncontradoException(CLIENTE_NAO_ENCONTRADO_COM_O_ID + id);
+                }
+        );
     }
 
 }
