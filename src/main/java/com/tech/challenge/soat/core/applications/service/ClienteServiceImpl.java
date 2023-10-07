@@ -4,20 +4,28 @@ import com.tech.challenge.soat.adapters.driver.v1.model.request.ClienteRequest;
 import com.tech.challenge.soat.core.applications.factory.ClienteFactory;
 import com.tech.challenge.soat.core.applications.ports.ClienteRepository;
 import com.tech.challenge.soat.core.domain.Cliente;
+import com.tech.challenge.soat.core.exception.BusinessException;
 import com.tech.challenge.soat.core.exception.ClienteNaoEncontradoException;
+import com.tech.challenge.soat.core.exception.NegocioException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
+
+import static java.util.Objects.isNull;
+
 
 @Service
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class ClienteServiceImpl implements ClienteService{
 
-    public static final String CLIENTE_NAO_ENCONTRADO_COM_O_ID = "Cliente não encontrado com o ID: ";
+    private static final String CLIENTE_NAO_ENCONTRADO_COM_O_ID = "Cliente não encontrado com o ID: ";
+    private static final String CLIENTE_NAO_ENCONTRADO_PARA_O_CPF = "Cliente não encontrado para o CPF: ";
+    private static final String CLIENTE_JA_CADASTRADO_PARA_O_CPF = "Cliente já cadastrado para o CPF ";
 
     private final ClienteRepository clienteRepository;
 
@@ -30,11 +38,22 @@ public class ClienteServiceImpl implements ClienteService{
 
     @Override
     public Cliente buscarPorCpf(String cpf) {
-        return clienteRepository.findByCpf(cpf);
+
+        return Optional.ofNullable(clienteRepository.findByCpf(cpf))
+                .orElseThrow(() -> new BusinessException(CLIENTE_NAO_ENCONTRADO_PARA_O_CPF + cpf));
+
     }
 
     @Override
     public Cliente salvar(ClienteRequest clienteRequest) {
+
+        String cpf = clienteRequest != null ? clienteRequest.getCpf() : null;
+
+        Cliente clienteExiste = (cpf != null) ? clienteRepository.findByCpf(cpf) : null;
+
+        if (clienteExiste != null) {
+            throw new BusinessException(CLIENTE_JA_CADASTRADO_PARA_O_CPF + cpf);
+        }
 
         Cliente clienteNovo = clienteFactory.novo(clienteRequest);
 

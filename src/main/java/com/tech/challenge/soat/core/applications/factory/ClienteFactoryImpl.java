@@ -35,6 +35,7 @@ public class ClienteFactoryImpl implements ClienteFactory {
                 .nome(clienteRequest.getNome())
                 .cpf(clienteRequest.getCpf())
                 .email(clienteRequest.getEmail())
+                .telefone(clienteRequest.getTelefone())
                 .build();
     }
 }
