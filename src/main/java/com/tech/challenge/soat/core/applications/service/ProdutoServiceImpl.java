@@ -16,16 +16,12 @@ import java.util.NoSuchElementException;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class ProdutoServiceImpl implements ProdutoService {
 
-    @Autowired
-    private ProdutoService produtoService;
+    private final ProdutoFactory produtoFactory;
 
-    @Autowired
-    private ProdutoFactory produtoFactory;
-
-    @Autowired
-    private ProdutoRepository produtoRepository;
+    private final ProdutoRepository produtoRepository;
 
     @Override
     public Produto salvar(ProdutoRequest produtoRequest) {

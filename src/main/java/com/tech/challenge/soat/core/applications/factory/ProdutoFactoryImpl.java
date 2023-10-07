@@ -7,22 +7,21 @@ import com.tech.challenge.soat.core.util.CategoriaUtil;
 import com.tech.challenge.soat.core.util.ImagemUtil;
 import com.tech.challenge.soat.shared.util.provider.DataProvider;
 import com.tech.challenge.soat.shared.util.provider.UUIDProvider;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
 @Component
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class ProdutoFactoryImpl implements ProdutoFactory {
 
-    @Autowired
-    private UUIDProvider uuidProvider;
-    @Autowired
-    private DataProvider dataProvider;
-    @Autowired
-    private ImagemUtil imagemUtil;
-    @Autowired
-    private CategoriaUtil categoriaUtil;
+
+    private final UUIDProvider uuidProvider;
+    private final DataProvider dataProvider;
+    private final ImagemUtil imagemUtil;
+    private final CategoriaUtil categoriaUtil;
 
     @Override
     public Produto novo(ProdutoRequest produtoRequest) {

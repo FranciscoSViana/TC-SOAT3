@@ -1,5 +1,7 @@
 package com.tech.challenge.soat.adapters.driver.v1.model.response;
 
+import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,6 +10,8 @@ import java.util.UUID;
 
 @Getter
 @Setter
+@Data
+@Builder
 public class ProdutoResponse {
 
     private UUID uuid;
