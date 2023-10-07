@@ -1,4 +1,4 @@
-package com.tech.challenge.soat.core.util;
+package com.tech.challenge.soat.shared.util;
 
 import org.springframework.stereotype.Component;
 

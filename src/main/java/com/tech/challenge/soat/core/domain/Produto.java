@@ -1,6 +1,6 @@
 package com.tech.challenge.soat.core.domain;
 
-import com.tech.challenge.soat.core.enumerator.CategoriaEnum;
+import com.tech.challenge.soat.core.enumerator.TipoCategoria;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,14 +17,21 @@ public class Produto {
 
     @Id
     private UUID id;
-    private String nome;
-    private String descricao;
+
     @Enumerated(EnumType.STRING)
-    private CategoriaEnum categoria;
+    private TipoCategoria categoria;
+
     @Lob
     private byte[] imagem;
+
+    private String nome;
+
+    private String descricao;
+
     private BigDecimal preco;
+
     private LocalDateTime dataHoraCriacao;
+
     private LocalDateTime dataHoraAlteracao;
 
 }

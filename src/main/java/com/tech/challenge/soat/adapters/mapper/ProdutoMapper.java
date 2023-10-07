@@ -3,7 +3,7 @@ package com.tech.challenge.soat.adapters.mapper;
 import com.tech.challenge.soat.adapters.driver.v1.model.request.ProdutoRequest;
 import com.tech.challenge.soat.adapters.driver.v1.model.response.ProdutoResponse;
 import com.tech.challenge.soat.core.domain.Produto;
-import com.tech.challenge.soat.core.util.ImagemUtil;
+import com.tech.challenge.soat.shared.util.ImagemUtil;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

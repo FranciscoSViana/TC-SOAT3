@@ -21,12 +21,19 @@ public class Cliente {
 
     @Id
     private UUID id;
+
     private String nome;
+
     private String cpf;
+
     private String email;
+
     private String telefone;
+
     private LocalDateTime dataHoraCriacao;
+
     private LocalDateTime dataHoraAlteracao;
+
     private boolean situacao;
 
 

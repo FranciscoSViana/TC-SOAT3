@@ -2,9 +2,9 @@ package com.tech.challenge.soat.core.applications.factory;
 
 import com.tech.challenge.soat.adapters.driver.v1.model.request.ProdutoRequest;
 import com.tech.challenge.soat.core.domain.Produto;
+import com.tech.challenge.soat.core.enumerator.TipoCategoria;
 import com.tech.challenge.soat.core.exception.NegocioException;
-import com.tech.challenge.soat.core.util.CategoriaUtil;
-import com.tech.challenge.soat.core.util.ImagemUtil;
+import com.tech.challenge.soat.shared.util.ImagemUtil;
 import com.tech.challenge.soat.shared.util.provider.DataProvider;
 import com.tech.challenge.soat.shared.util.provider.UUIDProvider;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,6 @@ public class ProdutoFactoryImpl implements ProdutoFactory {
     private final UUIDProvider uuidProvider;
     private final DataProvider dataProvider;
     private final ImagemUtil imagemUtil;
-    private final CategoriaUtil categoriaUtil;
 
     @Override
     public Produto novo(ProdutoRequest produtoRequest) {
@@ -29,7 +28,6 @@ public class ProdutoFactoryImpl implements ProdutoFactory {
         if (Objects.isNull(produtoRequest)) {
             throw new NegocioException("Produto não pode ser nulo");
         }
-
 
         return Produto.
                 builder()
@@ -39,7 +37,7 @@ public class ProdutoFactoryImpl implements ProdutoFactory {
                 .dataHoraCriacao(dataProvider.obterDataHoraAtual())
                 .descricao(produtoRequest.getDescricao())
                 .imagem(imagemUtil.decodeBase64(produtoRequest.getImagemBase64()))
-                .categoria(categoriaUtil.converterStringToCategoriaEnum(produtoRequest.getCategoria()))
+                .categoria(TipoCategoria.fromName(produtoRequest.getCategoria()))
                 .build();
     }
 }
