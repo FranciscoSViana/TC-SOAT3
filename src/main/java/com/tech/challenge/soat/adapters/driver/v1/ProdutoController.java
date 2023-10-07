@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/produtos")
@@ -22,7 +23,6 @@ public class ProdutoController {
 
     @Autowired
     private ProdutoMapper produtoMapper;
-
 
     @PostMapping
     public ResponseEntity<ProdutoResponse> cadastrarProduto(@RequestBody ProdutoRequest produtoRequest) throws Exception {
@@ -38,5 +38,11 @@ public class ProdutoController {
         return new ResponseEntity<>(produtos, HttpStatus.OK);
     }
 
+    @GetMapping("/{produtoId}")
+    public ResponseEntity<ProdutoResponse> getProduto(@PathVariable UUID produtoId) {
+        Produto produto = produtoService.getById(produtoId);
+        ProdutoResponse produtoResponse = produtoMapper.toResponse(produto);
+        return new ResponseEntity<>(produtoResponse, HttpStatus.OK);
+    }
 
 }

@@ -6,6 +6,7 @@ import com.tech.challenge.soat.adapters.mapper.ProdutoMapper;
 import com.tech.challenge.soat.core.applications.factory.ProdutoFactory;
 import com.tech.challenge.soat.core.applications.ports.ProdutoRepository;
 import com.tech.challenge.soat.core.domain.Produto;
+import com.tech.challenge.soat.core.exception.NegocioException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,5 +36,10 @@ public class ProdutoServiceImpl implements ProdutoService {
     @Override
     public List<Produto> findAll() {
         return produtoRepository.findAll();
+    }
+
+    @Override
+    public Produto getById(UUID uuid) {
+       return produtoRepository.findById(uuid).orElseThrow(() -> new NegocioException("Produto não encontrado"));
     }
 }
