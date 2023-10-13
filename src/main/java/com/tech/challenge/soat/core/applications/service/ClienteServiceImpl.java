@@ -34,13 +34,9 @@ public class ClienteServiceImpl implements ClienteService{
 
     private final ClienteFactory clienteFactory;
 
-    private final MercadoPagoService mercadoPagoService;
 
     @Override
     public List<Cliente> buscarTodos() {
-
-        PagamentoResponse res =  mercadoPagoService.criarPagamento(PagamentoRequest.builder().build());
-
 
         return clienteRepository.findAll();
     }

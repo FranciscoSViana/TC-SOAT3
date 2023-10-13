@@ -1,5 +1,4 @@
 package com.tech.challenge.soat.core.applications.feign.client.response;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,6 +13,5 @@ public class PagamentoResponse {
     private String codigoPix;
 
     private String qrCode;
-
 
 }
