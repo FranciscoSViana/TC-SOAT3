@@ -2,6 +2,9 @@ package com.tech.challenge.soat.core.applications.service;
 
 import com.tech.challenge.soat.adapters.driver.v1.model.request.ClienteRequest;
 import com.tech.challenge.soat.core.applications.factory.ClienteFactory;
+import com.tech.challenge.soat.core.applications.feign.client.request.PagamentoRequest;
+import com.tech.challenge.soat.core.applications.feign.client.response.PagamentoResponse;
+import com.tech.challenge.soat.core.applications.feign.service.MercadoPagoService;
 import com.tech.challenge.soat.core.applications.ports.ClienteRepository;
 import com.tech.challenge.soat.core.domain.Cliente;
 import com.tech.challenge.soat.core.exception.BusinessException;
@@ -31,8 +34,14 @@ public class ClienteServiceImpl implements ClienteService{
 
     private final ClienteFactory clienteFactory;
 
+    private final MercadoPagoService mercadoPagoService;
+
     @Override
     public List<Cliente> buscarTodos() {
+
+        PagamentoResponse res =  mercadoPagoService.criarPagamento(PagamentoRequest.builder().build());
+
+
         return clienteRepository.findAll();
     }
 
