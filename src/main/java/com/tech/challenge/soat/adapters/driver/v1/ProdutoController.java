@@ -5,6 +5,7 @@ import com.tech.challenge.soat.adapters.driver.v1.model.response.ProdutoResponse
 import com.tech.challenge.soat.adapters.mapper.ProdutoMapper;
 import com.tech.challenge.soat.core.applications.service.ProdutoService;
 import com.tech.challenge.soat.core.domain.Produto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,13 +16,12 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("v1/produtos")
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class ProdutoController {
 
-    @Autowired
-    private ProdutoService produtoService;
+    private final ProdutoService produtoService;
 
-    @Autowired
-    private ProdutoMapper produtoMapper;
+    private final ProdutoMapper produtoMapper;
 
     @PostMapping
     public ResponseEntity<ProdutoResponse> cadastrarProduto(@RequestBody ProdutoRequest produtoRequest) throws Exception {
