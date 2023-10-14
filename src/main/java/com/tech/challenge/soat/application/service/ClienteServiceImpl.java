@@ -1,10 +1,8 @@
 package com.tech.challenge.soat.application.service;
 
-import com.tech.challenge.soat.adapters.models.in.ClienteRequest;
 import com.tech.challenge.soat.domain.constants.I18n;
 import com.tech.challenge.soat.domain.exceptions.ClienteNaoEncontradoException;
 import com.tech.challenge.soat.domain.exceptions.NegocioException;
-import com.tech.challenge.soat.domain.factory.ClienteFactory;
 import com.tech.challenge.soat.domain.models.ClienteModel;
 import com.tech.challenge.soat.domain.repositories.ClienteRepository;
 import com.tech.challenge.soat.domain.services.ClienteService;
@@ -23,9 +21,6 @@ public class ClienteServiceImpl implements ClienteService {
 
     private final ClienteRepository clienteRepository;
 
-    private final ClienteFactory clienteFactory;
-
-
     @Override
     public List<ClienteModel> buscarTodos() {
 
@@ -41,9 +36,9 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
-    public ClienteModel salvar(ClienteRequest clienteRequest) {
+    public ClienteModel salvar(ClienteModel cliente) {
 
-        String cpf = clienteRequest != null ? clienteRequest.getCpf() : null;
+        String cpf = cliente != null ? cliente.getCpf() : null;
 
         ClienteModel clienteExiste = (cpf != null) ? clienteRepository.findByCpf(cpf) : null;
 
@@ -51,9 +46,7 @@ public class ClienteServiceImpl implements ClienteService {
             throw new NegocioException(I18n.CLIENTE_JA_CADASTRADO_PARA_O_CPF + cpf);
         }
 
-        ClienteModel clienteNovo = clienteFactory.novo(clienteRequest);
-
-        return clienteRepository.save(clienteNovo);
+        return clienteRepository.save(cliente);
     }
 
     @Override

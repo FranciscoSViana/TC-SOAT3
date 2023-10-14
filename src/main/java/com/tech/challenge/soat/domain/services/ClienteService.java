@@ -1,6 +1,5 @@
 package com.tech.challenge.soat.domain.services;
 
-import com.tech.challenge.soat.adapters.models.in.ClienteRequest;
 import com.tech.challenge.soat.domain.models.ClienteModel;
 
 import java.util.List;
@@ -14,7 +13,7 @@ public interface ClienteService {
 
     ClienteModel buscarPorCpf(String cpf);
 
-    ClienteModel salvar(ClienteRequest clienteRequest);
+    ClienteModel salvar(ClienteModel cliente);
 
     ClienteModel atualizar(ClienteModel cliente);
 

@@ -2,11 +2,10 @@ package com.tech.challenge.soat.adapters.gateways;
 
 import com.tech.challenge.soat.adapters.models.out.PagadorMP;
 import com.tech.challenge.soat.adapters.models.out.PagamentoMPRequest;
-import com.tech.challenge.soat.adapters.models.out.PagamentoResponse;
 import com.tech.challenge.soat.domain.models.PedidoModel;
 import com.tech.challenge.soat.domain.ports.out.pagamento.PagamentoPort;
-import com.tech.challenge.soat.infra.client.MercadoPagoClient;
 import com.tech.challenge.soat.domain.utils.JsonUtil;
+import com.tech.challenge.soat.infra.client.MercadoPagoClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,7 +28,7 @@ public class MercadoPagoGateway implements PagamentoPort {
 
 
     @Override
-    public PagamentoResponse criarPagamento(PedidoModel pedido) {
+    public PedidoModel criarPagamento(PedidoModel pedido) {
         String response = mercadoPagoClient.criarPagamento(authorization, PagamentoMPRequest.builder()
                 .valor(pedido.getPreco())
                 .payer(PagadorMP.builder().email(pedido.getCliente().getEmail()).build())
@@ -40,9 +39,8 @@ public class MercadoPagoGateway implements PagamentoPort {
 
         String qrImage = jsonUtil.obterValorChaveJson(response, QR_CODE_BASE_64);
 
-        return PagamentoResponse.builder()
-                .codigoPix(qrCopiaCola)
-                .qrCode(qrImage)
-                .build();
+        pedido.setCodigoPix(qrCopiaCola);
+        pedido.setQrCode(qrImage);
+        return  pedido;
     }
 }

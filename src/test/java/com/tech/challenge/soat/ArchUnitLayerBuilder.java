@@ -38,17 +38,9 @@ public class ArchUnitLayerBuilder {
     public static ArchUnitLayer createApplicationLayer() {
         var applicationLayers = new HashSet<String>();
 
-        applicationLayers.add("enums");
-        applicationLayers.add("constants");
-        applicationLayers.add("exceptions");
-        applicationLayers.add("models");
-        applicationLayers.add("factory");
-        applicationLayers.add("ports");
         applicationLayers.add("providers");
-        applicationLayers.add("repositories");
         applicationLayers.add("services");
         applicationLayers.add("utils");
-        applicationLayers.add("validators");
 
         return ArchUnitLayer.builder()
                 .name(APPLICATION_LAYER_NAME)
@@ -62,6 +54,7 @@ public class ArchUnitLayerBuilder {
         adapterLayers.add("controllers");
         adapterLayers.add("exceptions");
         adapterLayers.add("gateways");
+        adapterLayers.add("factory");
         adapterLayers.add("mappers");
         adapterLayers.add("models");
 

@@ -1,9 +1,8 @@
-package com.tech.challenge.soat.application.factory;
+package com.tech.challenge.soat.adapters.factory;
 
 import com.tech.challenge.soat.adapters.models.in.ClienteRequest;
 import com.tech.challenge.soat.domain.constants.I18n;
 import com.tech.challenge.soat.domain.exceptions.NegocioException;
-import com.tech.challenge.soat.domain.factory.ClienteFactory;
 import com.tech.challenge.soat.domain.models.ClienteModel;
 import com.tech.challenge.soat.domain.providers.DataProvider;
 import lombok.RequiredArgsConstructor;
@@ -16,12 +15,11 @@ import static java.util.Objects.isNull;
 
 @Component
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-public class ClienteFactoryImpl implements ClienteFactory {
+public class ClienteFactory {
 
     private final DataProvider dataProvider;
 
 
-    @Override
     public ClienteModel novo(ClienteRequest clienteRequest) {
 
         if(isNull(clienteRequest)) {

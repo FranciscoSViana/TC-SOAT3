@@ -1,6 +1,5 @@
 package com.tech.challenge.soat.domain.services;
 
-import com.tech.challenge.soat.adapters.models.in.PedidoRequest;
 import com.tech.challenge.soat.domain.enums.StatusPedido;
 import com.tech.challenge.soat.domain.models.PedidoModel;
 
@@ -8,7 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface PedidoService {
-    PedidoModel salvar(PedidoRequest savePedidoRequest);
+    PedidoModel salvar(PedidoModel pedido);
 
     PedidoModel pagar(UUID id);
 

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import static com.tngtech.archunit.library.Architectures.layeredArchitecture;
 
 public class ArchUnitTest {
-    private static final String PROJECT_PACKAGE = "br.com.tech.challenge.soat";
+    private static final String PROJECT_PACKAGE = "com.tech.challenge.soat";
 
     @Test
     void testNoLayerViolations() {
@@ -36,7 +36,7 @@ public class ArchUnitTest {
                 adaptersLayer.getName(),
                 infraLayer.getName());
 
-        arch.whereLayer(adaptersLayer.getName()).mayOnlyBeAccessedByLayers(infraLayer.getName());
+        arch.whereLayer(adaptersLayer.getName()).mayOnlyBeAccessedByLayers( infraLayer.getName());
 
         arch.check(jc);
     }

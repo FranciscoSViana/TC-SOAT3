@@ -1,7 +1,5 @@
 package com.tech.challenge.soat.application.service;
 
-import com.tech.challenge.soat.adapters.models.in.PedidoRequest;
-import com.tech.challenge.soat.adapters.models.out.PagamentoResponse;
 import com.tech.challenge.soat.domain.constants.I18n;
 import com.tech.challenge.soat.domain.enums.StatusPagamento;
 import com.tech.challenge.soat.domain.enums.StatusPedido;
@@ -30,10 +28,10 @@ public class PedidoServiceImpl implements PedidoService {
     private final PagamentoPort pagamentoPort;
 
     @Override
-    public PedidoModel salvar(PedidoRequest request) {
-        PedidoModel pedido = buscarPedidoPorIdOuCriarNovoPedido(request.getId());
-        List<ProdutoModel> produtos = buscarProdutosPorIdOuLancarErro(request.getProdutos());
-        ClienteModel cliente = buscarClientePorIdOuLancarErro(request.getCliente());
+    public PedidoModel salvar(PedidoModel salvarPedido) {
+        PedidoModel pedido = buscarPedidoPorIdOuCriarNovoPedido(salvarPedido.getId());
+        List<ProdutoModel> produtos = buscarProdutosPorIdOuLancarErro(pedido);
+        ClienteModel cliente = buscarClientePorIdOuLancarErro(pedido);
 
         validarCriacaoPedido(pedido, cliente);
         produtos.forEach(pedido::adicionarProdutoAoPedido);
@@ -75,9 +73,7 @@ public class PedidoServiceImpl implements PedidoService {
     @Override
     public PedidoModel criarPagamento(UUID id) {
         PedidoModel pedido = encontrarPedidoPorIdOuLancarErro(id);
-        PagamentoResponse pagamento = pagamentoPort.criarPagamento(pedido);
-        pedido.setQrCode(pagamento.getQrCode());
-        pedido.setCodigoPix(pagamento.getCodigoPix());
+        pedido = pagamentoPort.criarPagamento(pedido);
         return repository.save(pedido);
     }
 
@@ -85,16 +81,17 @@ public class PedidoServiceImpl implements PedidoService {
         return repository.findById(id).orElse(new PedidoModel());
     }
 
-    private List<ProdutoModel> buscarProdutosPorIdOuLancarErro(List<UUID> ids) {
-        List<ProdutoModel> produtos = produtoRepository.findAllById(ids);
+    private List<ProdutoModel> buscarProdutosPorIdOuLancarErro(PedidoModel pedido) {
+        List<UUID> produtoIds = pedido.getProdutos().stream().map(ProdutoModel::getId).toList();
+        List<ProdutoModel> produtos = produtoRepository.findAllById(produtoIds);
         if (produtos.isEmpty()) {
             throw new ServiceException(I18n.SEM_PRODUTOS_VALIDOS);
         }
         return produtos;
     }
 
-    private ClienteModel buscarClientePorIdOuLancarErro(UUID clienteId) {
-        return clienteRepository.findById(clienteId)
+    private ClienteModel buscarClientePorIdOuLancarErro(PedidoModel pedido) {
+        return clienteRepository.findById(pedido.getCliente().getId())
                 .orElseThrow(() -> new ServiceException(I18n.CLIENTE_INVALIDO));
     }
 

@@ -1,11 +1,11 @@
 package com.tech.challenge.soat.adapters.controllers;
 
 
+import com.tech.challenge.soat.adapters.factory.ClienteFactory;
 import com.tech.challenge.soat.adapters.mapper.ClienteMapper;
 import com.tech.challenge.soat.adapters.models.in.ClienteRequest;
 import com.tech.challenge.soat.adapters.models.out.ClienteResponse;
 import com.tech.challenge.soat.domain.models.ClienteModel;
-import com.tech.challenge.soat.domain.ports.in.cliente.ClientePort;
 import com.tech.challenge.soat.domain.services.ClienteService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,11 +21,13 @@ import java.util.UUID;
 @RestController
 @RequestMapping("v1/clientes")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-public class ClienteController  implements ClientePort {
+public class ClienteController   {
 
     private final ClienteService clienteService;
 
     private final ClienteMapper clienteMapper;
+
+    private final ClienteFactory clienteFactory;
 
     @GetMapping
     public ResponseEntity<Collection<ClienteResponse>> todosClientes() {
@@ -50,7 +52,7 @@ public class ClienteController  implements ClientePort {
     public ResponseEntity<ClienteResponse> salvarCliente(@RequestBody @Valid ClienteRequest clienteRequest) {
 
 
-        ClienteModel clienteSalvo = clienteService.salvar(clienteRequest);
+        ClienteModel clienteSalvo = clienteService.salvar(clienteFactory.novo(clienteRequest));
 
         ClienteResponse response = clienteMapper.clienteToClienteModel(clienteSalvo);
 
