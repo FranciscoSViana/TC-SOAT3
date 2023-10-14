@@ -22,6 +22,7 @@ public class ArchUnitTest {
 
         Architectures.LayeredArchitecture arch = layeredArchitecture().consideringAllDependencies();
 
+
         arch.layer(domainLayer.getName()).definedBy(domainLayer.getLayersAsVarargs());
         arch.layer(applicationLayer.getName()).definedBy(applicationLayer.getLayersAsVarargs());
         arch.layer(adaptersLayer.getName()).definedBy(adaptersLayer.getLayersAsVarargs());
