@@ -2,7 +2,7 @@ package com.tech.challenge.soat.adapters.mapper;
 
 import com.tech.challenge.soat.adapters.driver.v1.model.request.ProdutoRequest;
 import com.tech.challenge.soat.adapters.driver.v1.model.response.ProdutoResponse;
-import com.tech.challenge.soat.core.domain.Produto;
+import com.tech.challenge.soat.domain.models.ProdutoModel;
 import com.tech.challenge.soat.shared.util.ImagemUtil;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -20,11 +20,11 @@ public class ProdutoMapper {
 
     private final ImagemUtil imagemUtil;
 
-    public Produto produtoRequestToProduto(ProdutoRequest produtoRequest) {
-       return modelMapper.map(produtoRequest, Produto.class);
+    public ProdutoModel produtoRequestToProduto(ProdutoRequest produtoRequest) {
+       return modelMapper.map(produtoRequest, ProdutoModel.class);
     }
 
-    public ProdutoResponse produtoToProdutoResponse(Produto produto) {
+    public ProdutoResponse produtoToProdutoResponse(ProdutoModel produto) {
         return ProdutoResponse.builder()
                 .uuid(produto.getId())
                 .categoria(produto.getCategoria().getDescricao())
@@ -35,7 +35,7 @@ public class ProdutoMapper {
                 .build();
     }
 
-    public List<ProdutoResponse> getProdutos(List<Produto> list) {
+    public List<ProdutoResponse> getProdutos(List<ProdutoModel> list) {
         List<ProdutoResponse> produtos = new ArrayList<>();
         list.forEach(item -> {
             ProdutoResponse produtoResponse = produtoToProdutoResponse(item);

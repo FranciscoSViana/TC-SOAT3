@@ -1,14 +1,11 @@
-package com.tech.challenge.soat.core.domain;
+package com.tech.challenge.soat.infra.persistence.jpa.entities;
 
 
 import com.tech.challenge.soat.core.enumerator.StatusPagamento;
 import com.tech.challenge.soat.core.enumerator.StatusPedido;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
+import com.tech.challenge.soat.domain.models.ClienteModel;
+import com.tech.challenge.soat.domain.models.ProdutoModel;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,7 +20,7 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Pedido {
+public class PedidoEntity {
 
     @Id
     private UUID id;
@@ -34,11 +31,11 @@ public class Pedido {
             joinColumns = @JoinColumn(name = "pedido_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "produto_id", referencedColumnName = "id")
     )
-    private List<Produto> produtos;
+    private List<ProdutoModel> produtos;
 
     @ManyToOne
     @JoinColumn(name = "cliente_id", referencedColumnName = "id")
-    private Cliente cliente;
+    private ClienteModel cliente;
 
     private StatusPedido statusPedido;
 
@@ -48,7 +45,7 @@ public class Pedido {
 
     private LocalTime tempoPreparo;
 
-    public void adicionarProdutoAoPedido(Produto produto){
+    public void adicionarProdutoAoPedido(ProdutoModel produto){
         this.produtos.add(produto);
         this.preco = this.preco + produto.getPreco().doubleValue();
     }

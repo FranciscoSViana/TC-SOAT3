@@ -1,4 +1,4 @@
-package com.tech.challenge.soat.core.domain;
+package com.tech.challenge.soat.domain.models;
 
 import com.tech.challenge.soat.core.enumerator.TipoCategoria;
 import jakarta.persistence.*;
@@ -8,20 +8,17 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Entity
+
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Produto {
+public class ProdutoModel {
 
-    @Id
     private UUID id;
 
-    @Enumerated(EnumType.STRING)
     private TipoCategoria categoria;
 
-    @Lob
     private byte[] imagem;
 
     private String nome;

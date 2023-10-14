@@ -4,8 +4,8 @@ package com.tech.challenge.soat.adapters.driver.v1;
 import com.tech.challenge.soat.adapters.driver.v1.model.response.ClienteResponse;
 import com.tech.challenge.soat.adapters.driver.v1.model.request.ClienteRequest;
 import com.tech.challenge.soat.adapters.mapper.ClienteMapper;
-import com.tech.challenge.soat.core.applications.service.ClienteService;
-import com.tech.challenge.soat.core.domain.Cliente;
+import com.tech.challenge.soat.domain.services.ClienteService;
+import com.tech.challenge.soat.domain.models.ClienteModel;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ public class ClienteController {
     @GetMapping
     public ResponseEntity<Collection<ClienteResponse>> todosClientes() {
 
-        List<Cliente> clientes = clienteService.buscarTodos();
+        List<ClienteModel> clientes = clienteService.buscarTodos();
 
         return ResponseEntity.ok(clienteMapper.clientesToClientesModel(clientes));
     }
@@ -37,7 +37,7 @@ public class ClienteController {
     @GetMapping("/{cpf}")
     public ResponseEntity<ClienteResponse> buscarPorCpf(@PathVariable("cpf") String cpf) {
 
-        Cliente cliente = clienteService.buscarPorCpf(cpf);
+        ClienteModel cliente = clienteService.buscarPorCpf(cpf);
 
         ClienteResponse response = clienteMapper.clienteToClienteModel(cliente);
 
@@ -49,7 +49,7 @@ public class ClienteController {
     public ResponseEntity<ClienteResponse> salvarCliente(@RequestBody @Valid ClienteRequest clienteRequest) {
 
 
-        Cliente clienteSalvo = clienteService.salvar(clienteRequest);
+        ClienteModel clienteSalvo = clienteService.salvar(clienteRequest);
 
         ClienteResponse response = clienteMapper.clienteToClienteModel(clienteSalvo);
 
@@ -59,7 +59,7 @@ public class ClienteController {
     @PutMapping("/{clienteId}")
     public ResponseEntity<ClienteResponse> atualizar(@PathVariable UUID clienteId, @RequestBody ClienteRequest clienteRequest) {
 
-        Cliente clienteAtual = clienteService.buscarOuFalhar(clienteId);
+        ClienteModel clienteAtual = clienteService.buscarOuFalhar(clienteId);
 
         clienteMapper.copyToDomainObject(clienteRequest, clienteAtual);
 

@@ -1,4 +1,5 @@
-package com.tech.challenge.soat.adapters.driver.v1.model.response;
+package com.tech.challenge.soat.domain.models;
+
 
 import com.tech.challenge.soat.core.enumerator.StatusPagamento;
 import com.tech.challenge.soat.core.enumerator.StatusPedido;
@@ -11,16 +12,29 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.UUID;
 
+
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PedidoResponse {
+public class PedidoModel {
+
     private UUID id;
-    private List<UUID> produtos;
-    private UUID cliente;
+
+    private List<ProdutoModel> produtos;
+
+    private ClienteModel cliente;
+
     private StatusPedido statusPedido;
+
     private Double preco;
+
     private StatusPagamento statusPagamento;
+
     private LocalTime tempoPreparo;
+
+    public void adicionarProdutoAoPedido(ProdutoModel produto){
+        this.produtos.add(produto);
+        this.preco = this.preco + produto.getPreco().doubleValue();
+    }
 }

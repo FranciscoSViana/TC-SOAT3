@@ -1,7 +1,7 @@
 package com.tech.challenge.soat.core.applications.factory;
 
 import com.tech.challenge.soat.adapters.driver.v1.model.request.ProdutoRequest;
-import com.tech.challenge.soat.core.domain.Produto;
+import com.tech.challenge.soat.domain.models.ProdutoModel;
 import com.tech.challenge.soat.core.enumerator.TipoCategoria;
 import com.tech.challenge.soat.core.exception.NegocioException;
 import com.tech.challenge.soat.shared.util.ImagemUtil;
@@ -23,13 +23,13 @@ public class ProdutoFactoryImpl implements ProdutoFactory {
     private final ImagemUtil imagemUtil;
 
     @Override
-    public Produto novo(ProdutoRequest produtoRequest) {
+    public ProdutoModel novo(ProdutoRequest produtoRequest) {
 
         if (Objects.isNull(produtoRequest)) {
             throw new NegocioException("Produto não pode ser nulo");
         }
 
-        return Produto.
+        return ProdutoModel.
                 builder()
                 .id(uuidProvider.geradorUUID())
                 .nome(produtoRequest.getNome())

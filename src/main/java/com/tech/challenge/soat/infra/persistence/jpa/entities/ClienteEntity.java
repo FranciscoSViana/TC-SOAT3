@@ -1,8 +1,6 @@
-package com.tech.challenge.soat.core.domain;
+package com.tech.challenge.soat.infra.persistence.jpa.entities;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,7 +15,7 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Cliente {
+public class ClienteEntity {
 
     @Id
     private UUID id;
@@ -35,6 +33,5 @@ public class Cliente {
     private LocalDateTime dataHoraAlteracao;
 
     private boolean situacao;
-
 
 }

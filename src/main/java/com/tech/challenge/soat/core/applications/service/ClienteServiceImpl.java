@@ -2,29 +2,23 @@ package com.tech.challenge.soat.core.applications.service;
 
 import com.tech.challenge.soat.adapters.driver.v1.model.request.ClienteRequest;
 import com.tech.challenge.soat.core.applications.factory.ClienteFactory;
-import com.tech.challenge.soat.core.applications.feign.client.request.PagamentoRequest;
-import com.tech.challenge.soat.core.applications.feign.client.response.PagamentoResponse;
-import com.tech.challenge.soat.core.applications.feign.service.MercadoPagoService;
-import com.tech.challenge.soat.core.applications.ports.ClienteRepository;
-import com.tech.challenge.soat.core.domain.Cliente;
+import com.tech.challenge.soat.domain.repositories.ClienteRepository;
+import com.tech.challenge.soat.domain.models.ClienteModel;
 import com.tech.challenge.soat.core.exception.BusinessException;
 import com.tech.challenge.soat.core.exception.ClienteNaoEncontradoException;
-import com.tech.challenge.soat.core.exception.NegocioException;
+import com.tech.challenge.soat.domain.services.ClienteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
-
-import static java.util.Objects.isNull;
 
 
 @Service
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-public class ClienteServiceImpl implements ClienteService{
+public class ClienteServiceImpl implements ClienteService {
 
     private static final String CLIENTE_NAO_ENCONTRADO_COM_O_ID = "Cliente não encontrado com o ID: ";
     private static final String CLIENTE_NAO_ENCONTRADO_PARA_O_CPF = "Cliente não encontrado para o CPF: ";
@@ -36,13 +30,13 @@ public class ClienteServiceImpl implements ClienteService{
 
 
     @Override
-    public List<Cliente> buscarTodos() {
+    public List<ClienteModel> buscarTodos() {
 
         return clienteRepository.findAll();
     }
 
     @Override
-    public Cliente buscarPorCpf(String cpf) {
+    public ClienteModel buscarPorCpf(String cpf) {
 
         return Optional.ofNullable(clienteRepository.findByCpf(cpf))
                 .orElseThrow(() -> new BusinessException(CLIENTE_NAO_ENCONTRADO_PARA_O_CPF + cpf));
@@ -50,28 +44,28 @@ public class ClienteServiceImpl implements ClienteService{
     }
 
     @Override
-    public Cliente salvar(ClienteRequest clienteRequest) {
+    public ClienteModel salvar(ClienteRequest clienteRequest) {
 
         String cpf = clienteRequest != null ? clienteRequest.getCpf() : null;
 
-        Cliente clienteExiste = (cpf != null) ? clienteRepository.findByCpf(cpf) : null;
+        ClienteModel clienteExiste = (cpf != null) ? clienteRepository.findByCpf(cpf) : null;
 
         if (clienteExiste != null) {
             throw new BusinessException(CLIENTE_JA_CADASTRADO_PARA_O_CPF + cpf);
         }
 
-        Cliente clienteNovo = clienteFactory.novo(clienteRequest);
+        ClienteModel clienteNovo = clienteFactory.novo(clienteRequest);
 
         return clienteRepository.save(clienteNovo);
     }
 
     @Override
-    public Cliente atualizar(Cliente cliente) {
+    public ClienteModel atualizar(ClienteModel cliente) {
         return clienteRepository.save(cliente);
     }
 
     @Override
-    public Cliente buscarOuFalhar(UUID id) {
+    public ClienteModel buscarOuFalhar(UUID id) {
         return clienteRepository.findById(id)
                 .orElseThrow(() -> new ClienteNaoEncontradoException(String.valueOf(id)));
     }
