@@ -1,6 +1,6 @@
 package com.tech.challenge.soat.domain.services;
 
-import com.tech.challenge.soat.adapters.driver.v1.model.request.ClienteRequest;
+import com.tech.challenge.soat.adapters.models.in.ClienteRequest;
 import com.tech.challenge.soat.domain.models.ClienteModel;
 
 import java.util.List;

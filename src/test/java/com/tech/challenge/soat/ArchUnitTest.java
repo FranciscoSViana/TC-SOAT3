@@ -38,7 +38,7 @@ public class ArchUnitTest {
 
         arch.whereLayer(adaptersLayer.getName()).mayOnlyBeAccessedByLayers(infraLayer.getName());
 
-//        arch.check(jc);
+        arch.check(jc);
     }
 }
 

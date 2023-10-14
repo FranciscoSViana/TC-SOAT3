@@ -1,15 +1,15 @@
 package com.tech.challenge.soat.adapters.mapper;
 
-import com.tech.challenge.soat.adapters.driver.v1.model.request.ProdutoRequest;
-import com.tech.challenge.soat.adapters.driver.v1.model.response.ProdutoResponse;
+import com.tech.challenge.soat.adapters.models.in.ProdutoRequest;
+import com.tech.challenge.soat.adapters.models.out.ProdutoResponse;
 import com.tech.challenge.soat.domain.models.ProdutoModel;
-import com.tech.challenge.soat.shared.util.ImagemUtil;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 @Component
@@ -18,7 +18,6 @@ public class ProdutoMapper {
 
     private final ModelMapper modelMapper;
 
-    private final ImagemUtil imagemUtil;
 
     public ProdutoModel produtoRequestToProduto(ProdutoRequest produtoRequest) {
        return modelMapper.map(produtoRequest, ProdutoModel.class);
@@ -31,7 +30,7 @@ public class ProdutoMapper {
                 .descricao(produto.getDescricao())
                 .preco(produto.getPreco())
                 .nome(produto.getNome())
-                .imagemBase64(imagemUtil.encodeBase64(produto.getImagem()))
+                .imagemBase64(Base64.getEncoder().encodeToString(produto.getImagem()))
                 .build();
     }
 

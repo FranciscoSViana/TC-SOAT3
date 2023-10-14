@@ -12,11 +12,12 @@ import java.util.UUID;
 
 
 @Data
+@Entity
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class ClienteModel {
-
+    @Id
     private UUID id;
 
     private String nome;

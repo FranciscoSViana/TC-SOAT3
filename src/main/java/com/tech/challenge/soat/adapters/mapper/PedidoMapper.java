@@ -1,6 +1,6 @@
 package com.tech.challenge.soat.adapters.mapper;
 
-import com.tech.challenge.soat.adapters.driver.v1.model.response.PedidoResponse;
+import com.tech.challenge.soat.adapters.models.out.PedidoResponse;
 import com.tech.challenge.soat.domain.models.PedidoModel;
 import com.tech.challenge.soat.domain.models.ProdutoModel;
 import org.springframework.stereotype.Component;
@@ -19,6 +19,8 @@ public class PedidoMapper {
                 .produtos(pedido.getProdutos().stream().map(ProdutoModel::getId).toList())
                 .statusPagamento(pedido.getStatusPagamento())
                 .tempoPreparo(pedido.getTempoPreparo())
+                .qrCode(pedido.getQrCode())
+                .codigoPix(pedido.getCodigoPix())
                 .build();
     }
 

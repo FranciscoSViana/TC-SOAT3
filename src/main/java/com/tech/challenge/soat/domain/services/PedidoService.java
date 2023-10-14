@@ -1,8 +1,8 @@
 package com.tech.challenge.soat.domain.services;
 
-import com.tech.challenge.soat.adapters.driver.v1.model.request.PedidoRequest;
+import com.tech.challenge.soat.adapters.models.in.PedidoRequest;
+import com.tech.challenge.soat.domain.enums.StatusPedido;
 import com.tech.challenge.soat.domain.models.PedidoModel;
-import com.tech.challenge.soat.core.enumerator.StatusPedido;
 
 import java.util.List;
 import java.util.UUID;
@@ -17,4 +17,6 @@ public interface PedidoService {
     PedidoModel buscarPedido(UUID id);
 
     List<PedidoModel> buscarPedidos();
+
+    PedidoModel criarPagamento(UUID id);
 }

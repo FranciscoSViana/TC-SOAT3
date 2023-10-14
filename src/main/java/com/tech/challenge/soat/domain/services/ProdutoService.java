@@ -1,6 +1,6 @@
 package com.tech.challenge.soat.domain.services;
 
-import com.tech.challenge.soat.adapters.driver.v1.model.request.ProdutoRequest;
+import com.tech.challenge.soat.adapters.models.in.ProdutoRequest;
 import com.tech.challenge.soat.domain.models.ProdutoModel;
 
 import java.util.List;

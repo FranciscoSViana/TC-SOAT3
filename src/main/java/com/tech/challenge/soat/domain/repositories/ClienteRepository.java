@@ -5,15 +5,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
 import java.util.UUID;
 
-
-public interface ClienteRepository {
-
+@Repository
+public interface ClienteRepository extends JpaRepository<ClienteModel, UUID>{
+    @Query("SELECT c FROM ClienteModel c WHERE c.situacao = true AND c.cpf = :cpf")
     ClienteModel findByCpf(String cpf);
-
-    ClienteModel save(ClienteModel cliente);
-
-    Optional<Object> findById(UUID id);
 }

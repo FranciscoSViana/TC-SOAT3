@@ -1,9 +1,8 @@
 package com.tech.challenge.soat.adapters.mapper;
 
 
-
-import com.tech.challenge.soat.adapters.driver.v1.model.response.ClienteResponse;
-import com.tech.challenge.soat.adapters.driver.v1.model.request.ClienteRequest;
+import com.tech.challenge.soat.adapters.models.in.ClienteRequest;
+import com.tech.challenge.soat.adapters.models.out.ClienteResponse;
 import com.tech.challenge.soat.domain.models.ClienteModel;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
