@@ -21,8 +21,11 @@ public class ArchUnitLayerBuilder {
         domainLayers.add("constants");
         domainLayers.add("exceptions");
         domainLayers.add("models");
+        domainLayers.add("factory");
+        domainLayers.add("ports");
+        domainLayers.add("providers");
         domainLayers.add("repositories");
-        domainLayers.add("usecases");
+        domainLayers.add("services");
         domainLayers.add("utils");
         domainLayers.add("validators");
 
@@ -35,11 +38,9 @@ public class ArchUnitLayerBuilder {
     public static ArchUnitLayer createApplicationLayer() {
         var applicationLayers = new HashSet<String>();
 
-        applicationLayers.add("mappers");
-        applicationLayers.add("mergers");
+        applicationLayers.add("providers");
         applicationLayers.add("services");
         applicationLayers.add("utils");
-        applicationLayers.add("validators");
 
         return ArchUnitLayer.builder()
                 .name(APPLICATION_LAYER_NAME)
@@ -50,7 +51,12 @@ public class ArchUnitLayerBuilder {
     public static ArchUnitLayer createAdaptersLayer() {
         var adapterLayers = new HashSet<String>();
 
+        adapterLayers.add("controllers");
+        adapterLayers.add("exceptions");
         adapterLayers.add("gateways");
+        adapterLayers.add("factory");
+        adapterLayers.add("mappers");
+        adapterLayers.add("models");
 
         return ArchUnitLayer.builder()
                 .name(ADAPTERS_LAYER_NAME)
@@ -61,9 +67,8 @@ public class ArchUnitLayerBuilder {
     public static ArchUnitLayer createInfraLayer() {
         var infraLayers = new HashSet<String>();
 
-        infraLayers.add("messaging");
-        infraLayers.add("migration");
-        infraLayers.add("persistence");
+        infraLayers.add("client");
+        infraLayers.add("config");
 
         return ArchUnitLayer.builder()
                 .name(INFRA_LAYER_NAME)

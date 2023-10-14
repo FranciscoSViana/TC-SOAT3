@@ -1,10 +1,9 @@
 package com.tech.challenge.soat.adapters.mapper;
 
 
-
-import com.tech.challenge.soat.adapters.driver.v1.model.response.ClienteResponse;
-import com.tech.challenge.soat.adapters.driver.v1.model.request.ClienteRequest;
-import com.tech.challenge.soat.core.domain.Cliente;
+import com.tech.challenge.soat.adapters.models.in.ClienteRequest;
+import com.tech.challenge.soat.adapters.models.out.ClienteResponse;
+import com.tech.challenge.soat.domain.models.ClienteModel;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,21 +18,21 @@ public class ClienteMapper {
 
     private final ModelMapper modelMapper;
 
-    public Cliente clienteInputToCliente(ClienteRequest clienteRequest) {
-        return modelMapper.map(clienteRequest, Cliente.class);
+    public ClienteModel clienteInputToCliente(ClienteRequest clienteRequest) {
+        return modelMapper.map(clienteRequest, ClienteModel.class);
     }
 
-    public ClienteResponse clienteToClienteModel(Cliente cliente) {
+    public ClienteResponse clienteToClienteModel(ClienteModel cliente) {
         return modelMapper.map(cliente, ClienteResponse.class);
     }
 
-    public Collection<ClienteResponse> clientesToClientesModel(Collection<Cliente> clientes) {
+    public Collection<ClienteResponse> clientesToClientesModel(Collection<ClienteModel> clientes) {
         return clientes.stream()
                 .map(cli -> modelMapper.map(cli, ClienteResponse.class))
                 .collect(Collectors.toList());
     }
 
-    public void copyToDomainObject(ClienteRequest clienteRequest, Cliente cliente) {
+    public void copyToDomainObject(ClienteRequest clienteRequest, ClienteModel cliente) {
         modelMapper.map(clienteRequest, cliente);
     }
 }
