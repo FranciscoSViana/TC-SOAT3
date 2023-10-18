@@ -6,6 +6,8 @@ import com.tech.challenge.soat.domain.repositories.ProdutoRepository;
 import com.tech.challenge.soat.domain.services.ProdutoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,12 +25,23 @@ public class ProdutoServiceImpl implements ProdutoService {
     }
 
     @Override
-    public List<ProdutoModel> buscarTodas() {
-        return produtoRepository.findAll();
+    public List<ProdutoModel> buscarTodas(int pageNumber, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        return produtoRepository.findByStatusTrue(pageable);
     }
 
     @Override
     public ProdutoModel buscarPorId(UUID uuid) {
        return produtoRepository.findById(uuid).orElseThrow(() -> new NegocioException("Produto não encontrado"));
+    }
+
+    @Override
+    public ProdutoModel atualizar(ProdutoModel produto) {
+        return produtoRepository.save(produto);
+    }
+
+    @Override
+    public ProdutoModel delete(ProdutoModel produto) {
+        return produtoRepository.save(produto);
     }
 }

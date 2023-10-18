@@ -38,4 +38,6 @@ public class ProdutoModel {
 
     private LocalDateTime dataHoraAlteracao;
 
+    private Boolean status;
+
 }

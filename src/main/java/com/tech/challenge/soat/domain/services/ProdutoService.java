@@ -9,8 +9,11 @@ public interface ProdutoService {
 
     ProdutoModel salvar(ProdutoModel produto);
 
-    List<ProdutoModel> buscarTodas();
+    List<ProdutoModel> buscarTodas(int pageNumber, int pageSize);
 
     ProdutoModel buscarPorId(UUID uuid);
 
+    ProdutoModel atualizar(ProdutoModel produto);
+
+    ProdutoModel delete(ProdutoModel produto);
 }

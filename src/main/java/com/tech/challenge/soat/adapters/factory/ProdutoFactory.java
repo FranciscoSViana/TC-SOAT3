@@ -35,6 +35,33 @@ public class ProdutoFactory {
                 .descricao(produtoRequest.getDescricao())
                 .imagem(Base64.getDecoder().decode(produtoRequest.getImagemBase64()))
                 .categoria(TipoCategoria.fromName(produtoRequest.getCategoria()))
+                .status(Boolean.TRUE)
                 .build();
+    }
+
+    public ProdutoModel atualizar(ProdutoRequest produtoRequest, ProdutoModel produtoModel) {
+
+        if (Objects.isNull(produtoRequest)) {
+            throw new NegocioException("Produto não pode ser nulo");
+        }
+
+        produtoModel.setNome(produtoRequest.getNome());
+        produtoModel.setPreco(produtoRequest.getPreco());
+        produtoModel.setDescricao(produtoRequest.getDescricao());
+        produtoModel.setImagem(Base64.getDecoder().decode(produtoRequest.getImagemBase64()));
+        produtoModel.setCategoria(TipoCategoria.fromName(produtoRequest.getCategoria()));
+        produtoModel.setDataHoraAlteracao(dataProvider.obterDataHoraAtual());
+        return produtoModel;
+    }
+
+    public ProdutoModel delete(ProdutoModel produtoModel) {
+
+        if (Objects.isNull(produtoModel)) {
+            throw new NegocioException("Produto não pode ser nulo");
+        }
+
+        produtoModel.setDataHoraAlteracao(dataProvider.obterDataHoraAtual());
+        produtoModel.setStatus(Boolean.FALSE);
+        return produtoModel;
     }
 }

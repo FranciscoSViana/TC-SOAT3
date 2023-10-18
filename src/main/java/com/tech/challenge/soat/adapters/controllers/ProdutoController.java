@@ -3,6 +3,7 @@ package com.tech.challenge.soat.adapters.controllers;
 import com.tech.challenge.soat.adapters.factory.ProdutoFactory;
 import com.tech.challenge.soat.adapters.mapper.ProdutoMapper;
 import com.tech.challenge.soat.adapters.models.in.ProdutoRequest;
+import com.tech.challenge.soat.adapters.models.out.ProdutoContentResponse;
 import com.tech.challenge.soat.adapters.models.out.ProdutoResponse;
 import com.tech.challenge.soat.domain.models.ProdutoModel;
 import com.tech.challenge.soat.domain.services.ProdutoService;
@@ -20,7 +21,6 @@ public class ProdutoController  {
 
     @Autowired
     private ProdutoService produtoService;
-
     @Autowired
     private ProdutoMapper produtoMapper;
     @Autowired
@@ -36,10 +36,12 @@ public class ProdutoController  {
 
 
     @GetMapping
-    public ResponseEntity<List<ProdutoResponse>> getProdutos() {
-        List<ProdutoModel> list = produtoService.buscarTodas();
+    public ResponseEntity<ProdutoContentResponse> getProdutos(@RequestParam(defaultValue = "0") int pageNumber,
+                                                              @RequestParam(defaultValue = "10") int pageSize) {
+        List<ProdutoModel> list = produtoService.buscarTodas(pageNumber, pageSize);
         List<ProdutoResponse> produtos = produtoMapper.getProdutos(list);
-        return new ResponseEntity<>(produtos, HttpStatus.OK);
+        ProdutoContentResponse response = new ProdutoContentResponse(produtos);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 
@@ -47,6 +49,24 @@ public class ProdutoController  {
     public ResponseEntity<ProdutoResponse> getProduto(@PathVariable UUID produtoId) {
         ProdutoModel produto = produtoService.buscarPorId(produtoId);
         ProdutoResponse produtoResponse = produtoMapper.produtoToProdutoResponse(produto);
+        return new ResponseEntity<>(produtoResponse, HttpStatus.OK);
+    }
+
+
+    @PatchMapping("/atualizar")
+    public ResponseEntity<ProdutoResponse> atualizarProduto(@RequestBody ProdutoRequest produtoRequest) throws Exception {
+        ProdutoModel produtoModel = produtoService.buscarPorId(produtoRequest.getUuid());
+        ProdutoModel newProdutoModel = produtoFactory.atualizar(produtoRequest, produtoModel);
+        ProdutoModel produto = produtoService.salvar(newProdutoModel);
+        ProdutoResponse produtoResponse = produtoMapper.produtoToProdutoResponse(produto);
+        return new ResponseEntity<>(produtoResponse, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{produtoId}")
+    public ResponseEntity<ProdutoResponse> deleteProduto(@PathVariable UUID produtoId) {
+        ProdutoModel produto = produtoService.buscarPorId(produtoId);
+        ProdutoModel newProduto = produtoService.delete(produtoFactory.delete(produto));
+        ProdutoResponse produtoResponse = produtoMapper.produtoToProdutoResponse(newProduto);
         return new ResponseEntity<>(produtoResponse, HttpStatus.OK);
     }
 
