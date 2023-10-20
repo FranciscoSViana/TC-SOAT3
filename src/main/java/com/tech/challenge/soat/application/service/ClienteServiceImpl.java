@@ -66,7 +66,7 @@ public class ClienteServiceImpl implements ClienteService {
         clienteRepository.findById(id).ifPresentOrElse(
                 cliente -> {
                     cliente.setSituacao(Boolean.FALSE);
-                    clienteRepository.save(cliente);
+                    clienteRepository.delete(cliente);
                 },
                 () -> {
                     throw new ClienteNaoEncontradoException(I18n.CLIENTE_NAO_ENCONTRADO_COM_O_ID + id);

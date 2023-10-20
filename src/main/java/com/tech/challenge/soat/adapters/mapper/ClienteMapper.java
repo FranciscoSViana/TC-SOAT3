@@ -9,7 +9,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
@@ -24,6 +26,26 @@ public class ClienteMapper {
 
     public ClienteResponse clienteToClienteModel(ClienteModel cliente) {
         return modelMapper.map(cliente, ClienteResponse.class);
+    }
+
+    public ClienteResponse clienteToClienteResponse(ClienteModel clienteModel) {
+        return ClienteResponse.builder()
+                .uuid(clienteModel.getId())
+                .nome(clienteModel.getNome())
+                .cpf(clienteModel.getCpf())
+                .email(clienteModel.getEmail())
+                .telefone(clienteModel.getTelefone())
+                .build();
+    }
+
+    public List<ClienteResponse> getClientes(List<ClienteModel> list) {
+        List<ClienteResponse> clientes = new ArrayList<>();
+        list.forEach(client -> {
+            ClienteResponse clienteResponse = clienteToClienteResponse(client);
+            clientes.add(clienteResponse);
+        });
+
+        return clientes;
     }
 
     public Collection<ClienteResponse> clientesToClientesModel(Collection<ClienteModel> clientes) {

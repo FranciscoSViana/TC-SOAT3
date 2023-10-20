@@ -4,6 +4,7 @@ package com.tech.challenge.soat.adapters.controllers;
 import com.tech.challenge.soat.adapters.factory.ClienteFactory;
 import com.tech.challenge.soat.adapters.mapper.ClienteMapper;
 import com.tech.challenge.soat.adapters.models.in.ClienteRequest;
+import com.tech.challenge.soat.adapters.models.out.ClienteContentResponse;
 import com.tech.challenge.soat.adapters.models.out.ClienteResponse;
 import com.tech.challenge.soat.domain.models.ClienteModel;
 import com.tech.challenge.soat.domain.services.ClienteService;
@@ -30,11 +31,15 @@ public class ClienteController   {
     private final ClienteFactory clienteFactory;
 
     @GetMapping
-    public ResponseEntity<Collection<ClienteResponse>> todosClientes() {
+    public ResponseEntity<ClienteContentResponse> todosClientes() {
 
-        List<ClienteModel> clientes = clienteService.buscarTodos();
+        List<ClienteModel> list = clienteService.buscarTodos();
+        List<ClienteResponse> clientes = clienteMapper.getClientes(list);
 
-        return ResponseEntity.ok(clienteMapper.clientesToClientesModel(clientes));
+        ClienteContentResponse clienteContentResponse = new ClienteContentResponse(clientes);
+
+
+        return new ResponseEntity<>(clienteContentResponse, HttpStatus.OK);
     }
 
     @GetMapping("/{cpf}")
@@ -54,7 +59,7 @@ public class ClienteController   {
 
         ClienteModel clienteSalvo = clienteService.salvar(clienteFactory.novo(clienteRequest));
 
-        ClienteResponse response = clienteMapper.clienteToClienteModel(clienteSalvo);
+        ClienteResponse response = clienteMapper.clienteToClienteResponse(clienteSalvo);
 
         return ResponseEntity.ok(response);
     }

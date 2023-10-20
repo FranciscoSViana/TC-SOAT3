@@ -4,11 +4,13 @@ import com.tech.challenge.soat.adapters.models.in.ClienteRequest;
 import com.tech.challenge.soat.domain.constants.I18n;
 import com.tech.challenge.soat.domain.exceptions.NegocioException;
 import com.tech.challenge.soat.domain.models.ClienteModel;
+import com.tech.challenge.soat.domain.models.ProdutoModel;
 import com.tech.challenge.soat.domain.providers.DataProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
 import java.util.UUID;
 
 import static java.util.Objects.isNull;
@@ -35,5 +37,14 @@ public class ClienteFactory {
                 .email(clienteRequest.getEmail())
                 .telefone(clienteRequest.getTelefone())
                 .build();
+    }
+
+    public ClienteModel delete(ClienteModel clienteModel) {
+
+        if (Objects.isNull(clienteModel)) {
+            throw new NegocioException("Cliente não pode ser nulo");
+        }
+
+        return clienteModel;
     }
 }
