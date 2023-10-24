@@ -1,2 +1,0 @@
-insert into cliente_model (id, nome, cpf, email, situacao) values ('1', 'Francisco Viana', '12345678900', 'teste@gmail.com', true);
-insert into cliente_model (id, nome, cpf, email, situacao) values ('2', 'Vinicius Junior', '00987654321', 'java@gmail.com', true);
