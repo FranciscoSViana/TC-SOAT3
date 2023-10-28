@@ -40,7 +40,7 @@ public class MercadoPagoGateway implements PagamentoPort {
         String qrImage = jsonUtil.obterValorChaveJson(response, QR_CODE_BASE_64);
 
         pedido.setCodigoPix(qrCopiaCola);
-        pedido.setQrCode(qrImage);
+        pedido.setQrCode(qrImage.getBytes());
         return  pedido;
     }
 }

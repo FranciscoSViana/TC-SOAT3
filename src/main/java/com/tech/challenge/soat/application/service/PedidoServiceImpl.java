@@ -15,6 +15,7 @@ import lombok.AllArgsConstructor;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,16 +28,15 @@ public class PedidoServiceImpl implements PedidoService {
     private final ProdutoRepository produtoRepository;
     private final PagamentoPort pagamentoPort;
 
+
     @Override
     public PedidoModel salvar(PedidoModel salvarPedido) {
-        PedidoModel pedido = buscarPedidoPorIdOuCriarNovoPedido(salvarPedido.getId());
-        List<ProdutoModel> produtos = buscarProdutosPorIdOuLancarErro(pedido);
-        ClienteModel cliente = buscarClientePorIdOuLancarErro(pedido);
-
-        validarCriacaoPedido(pedido, cliente);
-        produtos.forEach(pedido::adicionarProdutoAoPedido);
-
-        return repository.save(pedido);
+        List<ProdutoModel> produtos = buscarProdutosPorIdOuLancarErro(salvarPedido);
+        salvarPedido.setPreco(calcularValorTotalComStreams(produtos));
+        ClienteModel cliente = buscarClientePorIdOuLancarErro(salvarPedido);
+        validarCriacaoPedido(salvarPedido, cliente);
+        pagamentoPort.criarPagamento(salvarPedido);
+        return repository.save(salvarPedido);
     }
 
     @Override
@@ -77,6 +77,12 @@ public class PedidoServiceImpl implements PedidoService {
         return repository.save(pedido);
     }
 
+    private BigDecimal calcularValorTotalComStreams(List<ProdutoModel> produtos) {
+        return produtos.stream()
+                .filter(produto -> produto != null && produto.getPreco() != null)
+                .map(ProdutoModel::getPreco)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
     private PedidoModel buscarPedidoPorIdOuCriarNovoPedido(UUID id) {
         return repository.findById(id).orElse(new PedidoModel());
     }
@@ -104,7 +110,7 @@ public class PedidoServiceImpl implements PedidoService {
         if (!cliente.getId().equals(pedido.getCliente().getId())) {
             throw new ServiceException(I18n.CLIENTE_INVALIDO);
         }
-        if (pedido.getStatusPedido() != StatusPedido.RECEBIDO || pedido.getStatusPagamento() != StatusPagamento.AGUARDANDO_PAGAMENTO) {
+        if (pedido.getStatusPedido() != StatusPedido.RECEBIDO) {
             throw new ServiceException(I18n.NAO_E_POSSIVEL_ADICIONAR_ITENS_AO_PEDIDO);
         }
     }

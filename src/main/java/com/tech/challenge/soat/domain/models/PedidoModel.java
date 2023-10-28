@@ -46,8 +46,10 @@ public class PedidoModel {
     private LocalTime tempoPreparo;
 
     private String codigoPix;
-
-    private String qrCode;
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    @Column(columnDefinition = "LONGBLOB")
+    private byte[] qrCode;
 
     public void adicionarProdutoAoPedido(ProdutoModel produto){
         this.produtos.add(produto);
