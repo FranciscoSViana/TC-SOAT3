@@ -25,14 +25,6 @@ public class PedidoModel {
     @Id
     private UUID id;
 
-    @ManyToMany
-    @JoinTable(
-            name = "pedido_produto",
-            joinColumns = @JoinColumn(name = "pedido_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "produto_id", referencedColumnName = "id")
-    )
-    private List<ProdutoModel> produtos;
-
     @ManyToOne
     @JoinColumn(name = "cliente_id", referencedColumnName = "id")
     private ClienteModel cliente;
@@ -50,6 +42,14 @@ public class PedidoModel {
     @Basic(fetch = FetchType.LAZY)
     @Column(columnDefinition = "LONGBLOB")
     private byte[] qrCode;
+
+    @ManyToMany
+    @JoinTable(
+            name = "pedido_produto",
+            joinColumns = @JoinColumn(name = "pedido_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "produto_id", referencedColumnName = "id")
+    )
+    private List<ProdutoModel> produtos;
 
     public void adicionarProdutoAoPedido(ProdutoModel produto){
         this.produtos.add(produto);

@@ -35,7 +35,7 @@ public class PedidoMapper {
                 .produtos(pedido.getProdutos().stream().map(ProdutoModel::getId).toList())
                 .statusPagamento(pedido.getStatusPagamento())
                 .tempoPreparo(pedido.getTempoPreparo())
-                .qrCode(new String(pedido.getQrCode(), StandardCharsets.UTF_8))
+                //.qrCode(new String(pedido.getQrCode(), StandardCharsets.UTF_8))
                 .codigoPix(pedido.getCodigoPix())
                 .build();
     }

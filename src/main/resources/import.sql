@@ -27,3 +27,24 @@ insert into produto_model(id, nome, descricao, imagem, preco, categoria, data_ho
 insert into produto_model(id, nome, descricao, imagem, preco, categoria, data_hora_criacao, data_hora_alteracao, status) VALUES ('18', 'Milk Shake', 'Milk shake diversos sabores', '', 7.50, 'Sobremesa', utc_timestamp, utc_timestamp, true);
 insert into produto_model(id, nome, descricao, imagem, preco, categoria, data_hora_criacao, data_hora_alteracao, status) VALUES ('19', 'Pudim de Leite', 'Pudim de leite condesado', '', 6.00, 'Sobremesa', utc_timestamp, utc_timestamp, true);
 insert into produto_model(id, nome, descricao, imagem, preco, categoria, data_hora_criacao, data_hora_alteracao, status) VALUES ('20', 'Tortinha', 'Tortas doce diversos sabores', '', 3.00, 'Sobremesa', utc_timestamp, utc_timestamp, true);
+
+insert into pedido_model(id, cliente_id,status_pedido, preco, status_pagamento, tempo_preparo) VALUES ('1', '1', 0, 29.50,  1, '00:10:00');
+
+insert into pedido_produto(pedido_id, produto_id) VALUES ('1', '1');
+insert into pedido_produto(pedido_id, produto_id) VALUES ('1', '6');
+insert into pedido_produto(pedido_id, produto_id) VALUES ('1', '11');
+insert into pedido_produto(pedido_id, produto_id) VALUES ('1', '16');
+
+insert into pedido_model(id, cliente_id,status_pedido, preco, status_pagamento, tempo_preparo) VALUES ('2', '2', 2, 35.00,  0, '00:15:00');
+
+insert into pedido_produto(pedido_id, produto_id) VALUES ('2', '2');
+insert into pedido_produto(pedido_id, produto_id) VALUES ('2', '7');
+insert into pedido_produto(pedido_id, produto_id) VALUES ('2', '13');
+
+insert into pedido_model(id, cliente_id,status_pedido, preco, status_pagamento, tempo_preparo) VALUES ('3', '4', 0, 21.00,  1, '00:10:00');
+
+insert into pedido_produto(pedido_id, produto_id) VALUES ('3', '4');
+insert into pedido_produto(pedido_id, produto_id) VALUES ('3', '8');
+insert into pedido_produto(pedido_id, produto_id) VALUES ('3', '11');
+insert into pedido_produto(pedido_id, produto_id) VALUES ('3', '20');
+

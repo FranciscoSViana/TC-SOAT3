@@ -35,16 +35,16 @@ public class PedidoServiceImpl implements PedidoService {
         salvarPedido.setPreco(calcularValorTotalComStreams(produtos));
         ClienteModel cliente = buscarClientePorIdOuLancarErro(salvarPedido);
         validarCriacaoPedido(salvarPedido, cliente);
-        pagamentoPort.criarPagamento(salvarPedido);
+        //pagamentoPort.criarPagamento(salvarPedido);
         return repository.save(salvarPedido);
     }
 
     @Override
     public PedidoModel pagar(UUID id) {
         PedidoModel pedido = encontrarPedidoPorIdOuLancarErro(id);
-        validarPagamentoPedido(pedido);
+        //validarPagamentoPedido(pedido);
 
-        pedido.setStatusPedido(StatusPedido.EM_PREPARACAO);
+        //pedido.setStatusPedido(StatusPedido.EM_PREPARACAO);
         pedido.setStatusPagamento(StatusPagamento.PAGO);
 
         return repository.save(pedido);
@@ -53,9 +53,12 @@ public class PedidoServiceImpl implements PedidoService {
     @Override
     public PedidoModel alterarStatus(UUID id, StatusPedido status) {
         PedidoModel pedido = encontrarPedidoPorIdOuLancarErro(id);
-        validarPedidoParaMudancaDeStatus(pedido, status);
+        //validarPedidoParaMudancaDeStatus(pedido, status);
 
+        if (pedido.getStatusPedido() != null) {
         pedido.setStatusPedido(status);
+        }
+
 
         return repository.save(pedido);
     }
