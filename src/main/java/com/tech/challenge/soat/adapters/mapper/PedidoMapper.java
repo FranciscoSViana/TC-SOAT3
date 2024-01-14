@@ -10,6 +10,8 @@ import com.tech.challenge.soat.domain.services.ClienteService;
 import com.tech.challenge.soat.domain.services.PedidoService;
 import com.tech.challenge.soat.domain.services.ProdutoService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -18,12 +20,12 @@ import java.util.List;
 import java.util.UUID;
 
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class PedidoMapper {
 
-    PedidoService pedidoService;
-    ProdutoService produtoService;
-    ClienteService clienteService;
+    private final ProdutoService produtoService;
+
+    private final ClienteService clienteService;
 
     public PedidoResponse pedidoToPedidoRespose(PedidoModel pedido){
         return PedidoResponse
@@ -35,12 +37,12 @@ public class PedidoMapper {
                 .produtos(pedido.getProdutos().stream().map(ProdutoModel::getId).toList())
                 .statusPagamento(pedido.getStatusPagamento())
                 .tempoPreparo(pedido.getTempoPreparo())
-                //.qrCode(new String(pedido.getQrCode(), StandardCharsets.UTF_8))
                 .codigoPix(pedido.getCodigoPix())
                 .build();
     }
 
     public PedidoModel pedidoRequestToPedidoModel(PedidoRequest pedidoRequest){
+
         UUID id = (pedidoRequest.getId() != null) ? pedidoRequest.getId() : UUID.randomUUID();
 
         return  PedidoModel
@@ -49,12 +51,12 @@ public class PedidoMapper {
                 .tempoPreparo(pedidoRequest.getTempoPreparo())
                 .cliente(clienteService.buscarOuFalhar(pedidoRequest.getCliente()))
                 .statusPedido(StatusPedido.RECEBIDO)
-                .produtos(pedidoRequest.getProdutos().parallelStream().map((produtoId)-> produtoService.buscarPorId(produtoId)).toList())
+                .produtos(pedidoRequest.getProdutos()
+                        .parallelStream()
+                        .map(produtoId-> produtoService.obterProdutoPorUUID(produtoId)).toList())
                 .statusPagamento(StatusPagamento.AGUARDANDO_PAGAMENTO)
                 .build();
     }
-
-
 
     public List<PedidoResponse> pedidosToPedidosRespose(List<PedidoModel> pedidos) {
         return pedidos.stream().map((this::pedidoToPedidoRespose)).toList();

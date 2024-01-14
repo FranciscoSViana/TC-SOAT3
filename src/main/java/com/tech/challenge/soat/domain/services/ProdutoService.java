@@ -1,5 +1,8 @@
 package com.tech.challenge.soat.domain.services;
 
+import com.tech.challenge.soat.adapters.models.in.ProdutoRequest;
+import com.tech.challenge.soat.adapters.models.out.ProdutoContentResponse;
+import com.tech.challenge.soat.adapters.models.out.ProdutoResponse;
 import com.tech.challenge.soat.domain.models.ProdutoModel;
 
 import java.util.List;
@@ -7,13 +10,15 @@ import java.util.UUID;
 
 public interface ProdutoService {
 
-    ProdutoModel salvar(ProdutoModel produto);
+    ProdutoResponse salvar(ProdutoRequest produtoRequest);
 
-    List<ProdutoModel> buscarTodas(int pageNumber, int pageSize);
+    ProdutoContentResponse buscarTodas(int pageNumber, int pageSize);
 
-    ProdutoModel buscarPorId(UUID uuid);
+    ProdutoResponse buscarPorId(UUID uuid);
 
-    ProdutoModel atualizar(ProdutoModel produto);
+    ProdutoResponse atualizar(ProdutoRequest produtoRequest);
 
-    ProdutoModel delete(ProdutoModel produto);
+    ProdutoResponse delete(UUID produtoId);
+
+    ProdutoModel obterProdutoPorUUID(UUID produtoId);
 }
