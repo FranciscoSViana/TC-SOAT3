@@ -1,5 +1,8 @@
 package com.tech.challenge.soat.domain.services;
 
+import com.tech.challenge.soat.adapters.models.in.ClienteRequest;
+import com.tech.challenge.soat.adapters.models.out.ClienteContentResponse;
+import com.tech.challenge.soat.adapters.models.out.ClienteResponse;
 import com.tech.challenge.soat.domain.models.ClienteModel;
 
 import java.util.List;
@@ -9,13 +12,13 @@ import java.util.UUID;
 public interface ClienteService {
 
 
-    List<ClienteModel> buscarTodos();
+    ClienteContentResponse buscarTodos();
 
-    ClienteModel buscarPorCpf(String cpf);
+    ClienteResponse buscarPorCpf(String cpf);
 
-    ClienteModel salvar(ClienteModel cliente);
+    ClienteResponse salvar(ClienteRequest clienteRequest);
 
-    ClienteModel atualizar(ClienteModel cliente);
+    ClienteResponse atualizar(UUID clienteId, ClienteRequest clienteRequest);
 
     ClienteModel buscarOuFalhar(UUID clienteId);
 

@@ -7,6 +7,7 @@ import com.tech.challenge.soat.adapters.models.in.PedidoRequest;
 import com.tech.challenge.soat.adapters.models.out.PedidoResponse;
 import com.tech.challenge.soat.domain.models.PedidoModel;
 import com.tech.challenge.soat.domain.services.PedidoService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,12 +17,11 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("v1/pedidos")
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class PedidoController  {
 
-    @Autowired
-    PedidoService pedidoService;
-    @Autowired
-    PedidoMapper pedidoMapper;
+    private final PedidoService pedidoService;
+    private final PedidoMapper pedidoMapper;
 
 
     @PostMapping

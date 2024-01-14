@@ -7,6 +7,7 @@ import com.tech.challenge.soat.adapters.models.out.ProdutoContentResponse;
 import com.tech.challenge.soat.adapters.models.out.ProdutoResponse;
 import com.tech.challenge.soat.domain.models.ProdutoModel;
 import com.tech.challenge.soat.domain.services.ProdutoService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,14 +18,12 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("v1/produtos")
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class ProdutoController  {
 
-    @Autowired
-    private ProdutoService produtoService;
-    @Autowired
-    private ProdutoMapper produtoMapper;
-    @Autowired
-    private ProdutoFactory produtoFactory;
+    private final ProdutoService produtoService;
+    private final ProdutoMapper produtoMapper;
+    private final ProdutoFactory produtoFactory;
 
 
     @PostMapping

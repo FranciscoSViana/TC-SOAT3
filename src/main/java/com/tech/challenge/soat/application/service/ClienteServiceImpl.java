@@ -1,5 +1,10 @@
 package com.tech.challenge.soat.application.service;
 
+import com.tech.challenge.soat.adapters.factory.ClienteFactory;
+import com.tech.challenge.soat.adapters.mapper.ClienteMapper;
+import com.tech.challenge.soat.adapters.models.in.ClienteRequest;
+import com.tech.challenge.soat.adapters.models.out.ClienteContentResponse;
+import com.tech.challenge.soat.adapters.models.out.ClienteResponse;
 import com.tech.challenge.soat.domain.constants.I18n;
 import com.tech.challenge.soat.domain.exceptions.ClienteNaoEncontradoException;
 import com.tech.challenge.soat.domain.exceptions.NegocioException;
@@ -20,25 +25,33 @@ import java.util.UUID;
 public class ClienteServiceImpl implements ClienteService {
 
     private final ClienteRepository clienteRepository;
+    private final ClienteMapper clienteMapper;
+    private final ClienteFactory clienteFactory;
 
     @Override
-    public List<ClienteModel> buscarTodos() {
+    public ClienteContentResponse buscarTodos() {
 
-        return clienteRepository.findAll();
+        List<ClienteModel> list = clienteRepository.findAll();
+
+        List<ClienteResponse> clientes = clienteMapper.getClientes(list);
+
+        return ClienteContentResponse.builder().content(clientes).build();
     }
 
     @Override
-    public ClienteModel buscarPorCpf(String cpf) {
+    public ClienteResponse buscarPorCpf(String cpf) {
 
-        return Optional.ofNullable(clienteRepository.findByCpf(cpf))
+        ClienteModel cliente = Optional.ofNullable(clienteRepository.findByCpf(cpf))
                 .orElseThrow(() -> new NegocioException(I18n.CLIENTE_NAO_ENCONTRADO_PARA_O_CPF + cpf));
 
+        return clienteMapper.clienteToClienteModel(cliente);
+
     }
 
     @Override
-    public ClienteModel salvar(ClienteModel cliente) {
+    public ClienteResponse salvar(ClienteRequest clienteRequest) {
 
-        String cpf = cliente != null ? cliente.getCpf() : null;
+        String cpf = clienteRequest != null ? clienteRequest.getCpf() : null;
 
         ClienteModel clienteExiste = (cpf != null) ? clienteRepository.findByCpf(cpf) : null;
 
@@ -46,12 +59,21 @@ public class ClienteServiceImpl implements ClienteService {
             throw new NegocioException(I18n.CLIENTE_JA_CADASTRADO_PARA_O_CPF + cpf);
         }
 
-        return clienteRepository.save(cliente);
+        ClienteModel clienteSalvo = clienteRepository.save(clienteFactory.novo(clienteRequest));
+
+        return clienteMapper.clienteToClienteResponse(clienteSalvo);
     }
 
     @Override
-    public ClienteModel atualizar(ClienteModel cliente) {
-        return clienteRepository.save(cliente);
+    public ClienteResponse atualizar(UUID clienteId, ClienteRequest clienteRequest) {
+
+        ClienteModel clienteAtual = buscarOuFalhar(clienteId);
+
+        clienteMapper.copyToDomainObject(clienteRequest, clienteAtual);
+
+        clienteAtual = clienteRepository.save(clienteAtual);
+
+        return clienteMapper.clienteToClienteModel(clienteAtual);
     }
 
     @Override
