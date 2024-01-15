@@ -1,5 +1,8 @@
 package com.tech.challenge.soat.application.service;
 
+import com.tech.challenge.soat.adapters.mapper.PedidoMapper;
+import com.tech.challenge.soat.adapters.models.in.PedidoRequest;
+import com.tech.challenge.soat.adapters.models.out.PedidoResponse;
 import com.tech.challenge.soat.domain.constants.I18n;
 import com.tech.challenge.soat.domain.enums.StatusPagamento;
 import com.tech.challenge.soat.domain.enums.StatusPedido;
@@ -11,8 +14,9 @@ import com.tech.challenge.soat.domain.repositories.ClienteRepository;
 import com.tech.challenge.soat.domain.repositories.PedidoRepository;
 import com.tech.challenge.soat.domain.repositories.ProdutoRepository;
 import com.tech.challenge.soat.domain.services.PedidoService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.service.spi.ServiceException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -20,64 +24,98 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class PedidoServiceImpl implements PedidoService {
 
     private final PedidoRepository repository;
+
     private final ClienteRepository clienteRepository;
+
     private final ProdutoRepository produtoRepository;
+
     private final PagamentoPort pagamentoPort;
 
+    private final PedidoMapper pedidoMapper;
+
 
     @Override
-    public PedidoModel salvar(PedidoModel salvarPedido) {
+    public PedidoResponse salvar(PedidoRequest request) {
+
+        PedidoModel salvarPedido = pedidoMapper.pedidoRequestToPedidoModel(request);
+
         List<ProdutoModel> produtos = buscarProdutosPorIdOuLancarErro(salvarPedido);
+
         salvarPedido.setPreco(calcularValorTotalComStreams(produtos));
+
         ClienteModel cliente = buscarClientePorIdOuLancarErro(salvarPedido);
+
         validarCriacaoPedido(salvarPedido, cliente);
-        //pagamentoPort.criarPagamento(salvarPedido);
-        return repository.save(salvarPedido);
+
+        repository.save(salvarPedido);
+
+        return pedidoMapper.pedidoToPedidoRespose(salvarPedido);
     }
 
-    @Override
-    public PedidoModel pagar(UUID id) {
-        PedidoModel pedido = encontrarPedidoPorIdOuLancarErro(id);
-        //validarPagamentoPedido(pedido);
 
-        //pedido.setStatusPedido(StatusPedido.EM_PREPARACAO);
+    @Override
+    public PedidoResponse pagar(UUID id) {
+
+        PedidoModel pedido = encontrarPedidoPorIdOuLancarErro(id);
+
         pedido.setStatusPagamento(StatusPagamento.PAGO);
 
-        return repository.save(pedido);
+        repository.save(pedido);
+
+        return pedidoMapper.pedidoToPedidoRespose(pedido);
     }
 
     @Override
-    public PedidoModel alterarStatus(UUID id, StatusPedido status) {
+    public PedidoResponse alterarStatus(UUID id, StatusPedido status) {
+
         PedidoModel pedido = encontrarPedidoPorIdOuLancarErro(id);
-        //validarPedidoParaMudancaDeStatus(pedido, status);
 
         if (pedido.getStatusPedido() != null) {
-        pedido.setStatusPedido(status);
+
+            pedido.setStatusPedido(status);
+
         }
 
+        repository.save(pedido);
 
-        return repository.save(pedido);
+        return pedidoMapper.pedidoToPedidoRespose(pedido);
     }
 
     @Override
-    public PedidoModel buscarPedido(UUID id) {
-        return encontrarPedidoPorIdOuLancarErro(id);
-    }
+    public PedidoResponse buscarPedido(UUID id) {
 
-    @Override
-    public List<PedidoModel> buscarPedidos() {
-        return repository.findAll();
-    }
-
-    @Override
-    public PedidoModel criarPagamento(UUID id) {
         PedidoModel pedido = encontrarPedidoPorIdOuLancarErro(id);
+
+        return pedidoMapper.pedidoToPedidoRespose(pedido);
+    }
+
+    @Override
+    public List<PedidoResponse> buscarPedidos() {
+
+        List<PedidoModel> pedidos = repository.findAll();
+
+        return pedidoMapper.pedidosToPedidosRespose(pedidos);
+    }
+
+    @Override
+    public PedidoResponse criarPagamento(UUID id) {
+
+        PedidoModel pedido = encontrarPedidoPorIdOuLancarErro(id);
+
         pedido = pagamentoPort.criarPagamento(pedido);
-        return repository.save(pedido);
+
+        repository.save(pedido);
+
+        return pedidoMapper.pedidoToPedidoRespose(pedido);
+    }
+
+    @Override
+    public PedidoModel obterPorIdPagamentoMP(String idPagamento) {
+        return repository.findByIdPagamentoMP(idPagamento);
     }
 
     private BigDecimal calcularValorTotalComStreams(List<ProdutoModel> produtos) {
@@ -86,16 +124,17 @@ public class PedidoServiceImpl implements PedidoService {
                 .map(ProdutoModel::getPreco)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
-    private PedidoModel buscarPedidoPorIdOuCriarNovoPedido(UUID id) {
-        return repository.findById(id).orElse(new PedidoModel());
-    }
 
     private List<ProdutoModel> buscarProdutosPorIdOuLancarErro(PedidoModel pedido) {
+
         List<UUID> produtoIds = pedido.getProdutos().stream().map(ProdutoModel::getId).toList();
+
         List<ProdutoModel> produtos = produtoRepository.findAllById(produtoIds);
+
         if (produtos.isEmpty()) {
             throw new ServiceException(I18n.SEM_PRODUTOS_VALIDOS);
         }
+
         return produtos;
     }
 
@@ -118,26 +157,6 @@ public class PedidoServiceImpl implements PedidoService {
         }
     }
 
-    private void validarPagamentoPedido(PedidoModel pedido) {
-        if (pedido.getStatusPagamento() == StatusPagamento.PAGO) {
-            throw new ServiceException(I18n.PEDIDO_JA_ESTA_PAGO);
-        }
-    }
 
-    private void validarPedidoParaMudancaDeStatus(PedidoModel pedido, StatusPedido novoStatus) {
-        switch (novoStatus) {
-            case RECEBIDO, EM_PREPARACAO -> throw new ServiceException(I18n.NAO_E_POSSIVEL_ALTERAR_STATUS_DO_PEDIDO);
-            case PRONTO -> {
-                if (!pedido.getStatusPedido().equals(StatusPedido.RECEBIDO) || !pedido.getStatusPagamento().equals(StatusPagamento.PAGO)) {
-                    throw new ServiceException(I18n.NAO_E_POSSIVEL_ALTERAR_STATUS_DO_PEDIDO);
-                }
-            }
-            case FINALIZADO -> {
-                if (!pedido.getStatusPedido().equals(StatusPedido.PRONTO) || !pedido.getStatusPagamento().equals(StatusPagamento.PAGO)) {
-                    throw new ServiceException(I18n.NAO_E_POSSIVEL_ALTERAR_STATUS_DO_PEDIDO);
-                }
-            }
-        }
-    }
 }
 

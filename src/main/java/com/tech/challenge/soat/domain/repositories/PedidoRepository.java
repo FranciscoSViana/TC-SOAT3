@@ -10,4 +10,5 @@ import java.util.UUID;
 @Repository
 
 public interface PedidoRepository  extends JpaRepository<PedidoModel, UUID> {
+    PedidoModel findByIdPagamentoMP(String idPagamento);
 }

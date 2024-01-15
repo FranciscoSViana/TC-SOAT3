@@ -1,11 +1,9 @@
 package com.tech.challenge.soat.adapters.controllers;
 
 
-import com.tech.challenge.soat.adapters.mapper.PedidoMapper;
 import com.tech.challenge.soat.adapters.models.in.AlterarStatusPedidoRequest;
 import com.tech.challenge.soat.adapters.models.in.PedidoRequest;
 import com.tech.challenge.soat.adapters.models.out.PedidoResponse;
-import com.tech.challenge.soat.domain.models.PedidoModel;
 import com.tech.challenge.soat.domain.services.PedidoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,50 +16,55 @@ import java.util.UUID;
 @RestController
 @RequestMapping("v1/pedidos")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-public class PedidoController  {
+public class PedidoController {
 
     private final PedidoService pedidoService;
-    private final PedidoMapper pedidoMapper;
-
 
     @PostMapping
     public ResponseEntity<PedidoResponse> salvarPedido(@RequestBody PedidoRequest request) {
-        PedidoModel pedido = pedidoService.salvar(pedidoMapper.pedidoRequestToPedidoModel(request));
-        return ResponseEntity.ok(pedidoMapper.pedidoToPedidoRespose(pedido));
-    }
 
+        PedidoResponse pedido = pedidoService.salvar(request);
+
+        return ResponseEntity.ok(pedido);
+    }
 
     @PostMapping("/{id}/pagar")
     public ResponseEntity<PedidoResponse> pagarPedido(@PathVariable UUID id) {
-        PedidoModel pedido = pedidoService.pagar(id);
-        return ResponseEntity.ok(pedidoMapper.pedidoToPedidoRespose(pedido));
-    }
 
+        PedidoResponse pedido = pedidoService.pagar(id);
+
+        return ResponseEntity.ok((pedido));
+    }
 
     @PostMapping("/{id}/alterar-status")
-    public ResponseEntity<PedidoResponse> alterarStatus(@PathVariable UUID id,
-                                                        @RequestBody AlterarStatusPedidoRequest request) {
-        PedidoModel pedido = pedidoService.alterarStatus(id, request.getStatus());
-        return ResponseEntity.ok(pedidoMapper.pedidoToPedidoRespose(pedido));
-    }
+    public ResponseEntity<PedidoResponse> alterarStatus(@PathVariable UUID id, @RequestBody AlterarStatusPedidoRequest request) {
 
+        PedidoResponse pedido = pedidoService.alterarStatus(id, request.getStatus());
+
+        return ResponseEntity.ok(pedido);
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<PedidoResponse> buscarPedido(@PathVariable UUID id) {
-        PedidoModel pedido = pedidoService.buscarPedido(id);
-        return ResponseEntity.ok(pedidoMapper.pedidoToPedidoRespose(pedido));
+
+        PedidoResponse pedido = pedidoService.buscarPedido(id);
+
+        return ResponseEntity.ok(pedido);
     }
 
     @GetMapping
     public ResponseEntity<List<PedidoResponse>> buscarPedidos() {
-        List<PedidoModel> pedido = pedidoService.buscarPedidos();
-        return ResponseEntity.ok(pedidoMapper.pedidosToPedidosRespose(pedido));
-    }
 
+        List<PedidoResponse> pedido = pedidoService.buscarPedidos();
+
+        return ResponseEntity.ok(pedido);
+    }
 
     @PostMapping("/{id}/criar-pagamento")
     public ResponseEntity<PedidoResponse> criarPagamento(@PathVariable UUID id) {
-        PedidoModel pedido = pedidoService.criarPagamento(id);
-        return ResponseEntity.ok(pedidoMapper.pedidoToPedidoRespose(pedido));
+
+        PedidoResponse pedido = pedidoService.criarPagamento(id);
+
+        return ResponseEntity.ok(pedido);
     }
 }

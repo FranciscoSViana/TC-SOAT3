@@ -1,5 +1,7 @@
 package com.tech.challenge.soat.domain.services;
 
+import com.tech.challenge.soat.adapters.models.in.PedidoRequest;
+import com.tech.challenge.soat.adapters.models.out.PedidoResponse;
 import com.tech.challenge.soat.domain.enums.StatusPedido;
 import com.tech.challenge.soat.domain.models.PedidoModel;
 
@@ -7,15 +9,17 @@ import java.util.List;
 import java.util.UUID;
 
 public interface PedidoService {
-    PedidoModel salvar(PedidoModel pedido);
+    PedidoResponse salvar(PedidoRequest request);
 
-    PedidoModel pagar(UUID id);
+    PedidoResponse pagar(UUID id);
 
-    PedidoModel alterarStatus(UUID id, StatusPedido status);
+    PedidoResponse alterarStatus(UUID id, StatusPedido status);
 
-    PedidoModel buscarPedido(UUID id);
+    PedidoResponse buscarPedido(UUID id);
 
-    List<PedidoModel> buscarPedidos();
+    List<PedidoResponse> buscarPedidos();
 
-    PedidoModel criarPagamento(UUID id);
+    PedidoResponse criarPagamento(UUID id);
+
+    PedidoModel obterPorIdPagamentoMP(String idPagamento);
 }
