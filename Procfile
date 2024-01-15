@@ -1,1 +1,1 @@
-web: java -jar seu-arquivo.jar
+web: java -jar pos-fiap-soat.jar
