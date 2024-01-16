@@ -22,4 +22,6 @@ public interface PedidoService {
     PedidoResponse criarPagamento(UUID id);
 
     PedidoModel obterPorIdPagamentoMP(String idPagamento);
+
+    PedidoModel confirmarPagamento(PedidoModel pedido);
 }

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-public class Webhook {
+public class WebhookMPController {
 
     private final JsonUtil jsonUtil;
 

@@ -117,6 +117,10 @@ public class PedidoServiceImpl implements PedidoService {
     public PedidoModel obterPorIdPagamentoMP(String idPagamento) {
         return repository.findByIdPagamentoMP(idPagamento);
     }
+    @Override
+    public PedidoModel confirmarPagamento(PedidoModel pedido) {
+        return repository.save(PedidoModel.builder().statusPagamento(StatusPagamento.PAGO).build());
+    }
 
     private BigDecimal calcularValorTotalComStreams(List<ProdutoModel> produtos) {
         return produtos.stream()
