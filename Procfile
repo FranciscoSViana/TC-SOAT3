@@ -1,1 +1,1 @@
-web: java -jar pos-fiap-soat.jar
+web: java -jar target/soat-0.0.1-SNAPSHOT.jar
