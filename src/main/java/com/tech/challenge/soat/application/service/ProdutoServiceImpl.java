@@ -55,8 +55,9 @@ public class ProdutoServiceImpl implements ProdutoService {
 
         ProdutoModel produto = obterProdutoPorUUID(uuid);
 
-       return produtoMapper.produtoToProdutoResponse(produto);
+        return produtoMapper.produtoToProdutoResponse(produto);
     }
+
     @Override
     public ProdutoResponse atualizar(ProdutoRequest produtoRequest) {
 

@@ -5,7 +5,6 @@ import com.tech.challenge.soat.adapters.models.out.ProdutoContentResponse;
 import com.tech.challenge.soat.adapters.models.out.ProdutoResponse;
 import com.tech.challenge.soat.domain.models.ProdutoModel;
 
-import java.util.List;
 import java.util.UUID;
 
 public interface ProdutoService {

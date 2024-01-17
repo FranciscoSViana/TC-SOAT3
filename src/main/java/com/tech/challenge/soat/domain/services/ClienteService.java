@@ -5,7 +5,6 @@ import com.tech.challenge.soat.adapters.models.out.ClienteContentResponse;
 import com.tech.challenge.soat.adapters.models.out.ClienteResponse;
 import com.tech.challenge.soat.domain.models.ClienteModel;
 
-import java.util.List;
 import java.util.UUID;
 
 

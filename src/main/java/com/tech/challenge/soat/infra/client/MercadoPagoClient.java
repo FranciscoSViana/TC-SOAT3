@@ -12,11 +12,9 @@ public interface MercadoPagoClient {
     String criarPagamento(@RequestHeader("Authorization") String authorization,
                           @Valid @RequestBody PagamentoMPRequest pagamentoRequest);
 
-    @PutMapping(value = "/v1/payments/{payment_id}", consumes = "application/json", produces = "application/json")
+    @GetMapping(value = "/v1/payments/{payment_id}", consumes = "application/json", produces = "application/json")
     String confirmarPagamento(@RequestHeader("Authorization") String authorization,
-                          @Valid @PathVariable String payment_id);
-
-
+                              @Valid @PathVariable Long payment_id);
 
 
 }

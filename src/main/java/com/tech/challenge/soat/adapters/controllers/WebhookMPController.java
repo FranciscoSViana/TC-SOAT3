@@ -1,8 +1,6 @@
 package com.tech.challenge.soat.adapters.controllers;
 
-import com.tech.challenge.soat.domain.models.PedidoModel;
-import com.tech.challenge.soat.domain.services.PedidoService;
-import com.tech.challenge.soat.domain.utils.JsonUtil;
+import com.tech.challenge.soat.domain.services.WebhookMPService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,21 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class WebhookMPController {
 
-    private final JsonUtil jsonUtil;
+    private final WebhookMPService service;
 
-    private final PedidoService service;
+    @PostMapping("/integracao")
+    public void integracaoMP(@RequestBody String payload) {
 
+        service.integracaoMP(payload);
 
-    @PostMapping("/mp")
-    public String getNgrokUrl(@RequestBody String payload) {
-
-        String data = jsonUtil.obterValorChaveJson(payload, "data");
-
-        String id = jsonUtil.obterValorChaveJson(payload, "id");
-
-        PedidoModel pedido = service.obterPorIdPagamentoMP(id);
-
-        return "Endereço fornecido pelo ngrok: " + id;
     }
 
 

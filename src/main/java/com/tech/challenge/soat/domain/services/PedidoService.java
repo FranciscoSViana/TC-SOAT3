@@ -6,6 +6,7 @@ import com.tech.challenge.soat.domain.enums.StatusPedido;
 import com.tech.challenge.soat.domain.models.PedidoModel;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface PedidoService {
@@ -24,4 +25,10 @@ public interface PedidoService {
     PedidoModel obterPorIdPagamentoMP(String idPagamento);
 
     PedidoModel confirmarPagamento(PedidoModel pedido);
+
+    PedidoModel salvar(PedidoModel pedido);
+
+    Optional<PedidoModel> obterPorUUID(String idPagamento);
+
+
 }

@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -108,19 +109,34 @@ public class PedidoServiceImpl implements PedidoService {
 
         pedido = pagamentoPort.criarPagamento(pedido);
 
-        repository.save(pedido);
-
         return pedidoMapper.pedidoToPedidoRespose(pedido);
+    }
+
+    @Override
+    public Optional<PedidoModel> obterPorUUID(String idPagamento) {
+        return repository.findById(UUID.fromString(idPagamento));
     }
 
     @Override
     public PedidoModel obterPorIdPagamentoMP(String idPagamento) {
         return repository.findByIdPagamentoMP(idPagamento);
     }
+
     @Override
     public PedidoModel confirmarPagamento(PedidoModel pedido) {
-        return repository.save(PedidoModel.builder().statusPagamento(StatusPagamento.PAGO).build());
+
+
+        pedido.setStatusPagamento(StatusPagamento.PAGO);
+
+        return repository.save(pedido);
+
     }
+
+    @Override
+    public PedidoModel salvar(PedidoModel pedido) {
+        return repository.save(pedido);
+    }
+
 
     private BigDecimal calcularValorTotalComStreams(List<ProdutoModel> produtos) {
         return produtos.stream()

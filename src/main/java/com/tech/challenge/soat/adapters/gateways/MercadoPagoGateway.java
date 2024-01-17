@@ -18,7 +18,7 @@ public class MercadoPagoGateway implements PagamentoPort {
     private static final String PIX = "pix";
     private static final String QR_CODE = "qr_code";
     private static final String QR_CODE_BASE_64 = "qr_code_base64";
-    public static final String ID = "id";
+    private static final String ID = "id";
 
     private final MercadoPagoClient mercadoPagoClient;
 
@@ -39,6 +39,7 @@ public class MercadoPagoGateway implements PagamentoPort {
                 .valor(pedido.getPreco())
                 .payer(PagadorMP.builder().email(pedido.getCliente().getEmail()).build())
                 .metodoDePagamento(PIX)
+                .descricao(String.valueOf(pedido.getId()))
                 .enderecoNotificacao(urlWebhook)
                 .build());
 
@@ -54,11 +55,11 @@ public class MercadoPagoGateway implements PagamentoPort {
 
         pedido.setIdPagamentoMP(idPagamentoMP);
 
-        return  pedido;
+        return pedido;
     }
 
     @Override
-    public String confirmarPagamento(String idPagamento) {
-        return mercadoPagoClient.confirmarPagamento(authorization,idPagamento);
+    public String confirmarPagamento(Long idPagamento) {
+        return mercadoPagoClient.confirmarPagamento(authorization, idPagamento);
     }
 }

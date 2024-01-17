@@ -55,8 +55,8 @@ public class PedidoModel {
 
     private List<ProdutoModel> produtos;
 
-    public void adicionarProdutoAoPedido(ProdutoModel produto){
+    public void adicionarProdutoAoPedido(ProdutoModel produto) {
         this.produtos.add(produto);
-        this.preco = this.preco.add(produto.getPreco()) ;
+        this.preco = this.preco.add(produto.getPreco());
     }
 }
