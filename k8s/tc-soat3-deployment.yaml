@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
         - name: tc-soat3-container
-          image: franciscosviana/tc-soat3:1.0
+          image: franciscosviana/tc-soat3:v2
           ports:
             - containerPort: 80
           env:
