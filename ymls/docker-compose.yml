@@ -2,7 +2,7 @@ version: '3'
 services:
   soat3:
     container_name: soat3
-    image: franciscosviana/tc-soat3:1.0
+    image: pos-fiap/tc-soat3:1.0
     restart: unless-stopped
     ports:
       - 8080:8080

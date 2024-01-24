@@ -109,6 +109,8 @@ public class PedidoServiceImpl implements PedidoService {
 
         pedido = pagamentoPort.criarPagamento(pedido);
 
+        repository.save(pedido);
+
         return pedidoMapper.pedidoToPedidoRespose(pedido);
     }
 
@@ -118,13 +120,18 @@ public class PedidoServiceImpl implements PedidoService {
     }
 
     @Override
+    public List<PedidoModel> obterPedidosComPagamentoAguardando() {
+        StatusPagamento aguardandoPagamento = StatusPagamento.AGUARDANDO_PAGAMENTO;
+        return repository.findPedidosComPagamentoAguardando(aguardandoPagamento);
+    }
+
+    @Override
     public PedidoModel obterPorIdPagamentoMP(String idPagamento) {
         return repository.findByIdPagamentoMP(idPagamento);
     }
 
     @Override
     public PedidoModel confirmarPagamento(PedidoModel pedido) {
-
 
         pedido.setStatusPagamento(StatusPagamento.PAGO);
 

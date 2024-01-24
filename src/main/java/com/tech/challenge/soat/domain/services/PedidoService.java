@@ -30,5 +30,7 @@ public interface PedidoService {
 
     Optional<PedidoModel> obterPorUUID(String idPagamento);
 
+    List<PedidoModel> obterPedidosComPagamentoAguardando();
+
 
 }

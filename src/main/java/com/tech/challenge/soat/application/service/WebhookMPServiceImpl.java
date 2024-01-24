@@ -7,6 +7,7 @@ import com.tech.challenge.soat.domain.services.WebhookMPService;
 import com.tech.challenge.soat.domain.utils.JsonUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

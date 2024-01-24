@@ -40,7 +40,6 @@ public class MercadoPagoGateway implements PagamentoPort {
                 .payer(PagadorMP.builder().email(pedido.getCliente().getEmail()).build())
                 .metodoDePagamento(PIX)
                 .descricao(String.valueOf(pedido.getId()))
-                .enderecoNotificacao(urlWebhook)
                 .build());
 
         String qrCopiaCola = jsonUtil.obterValorChaveJson(response, QR_CODE);

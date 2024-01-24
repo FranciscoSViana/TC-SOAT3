@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: soat
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: soat
+  template:
+    metadata:
+      labels:
+        app: soat
+    spec:
+      containers:
+        - name: soat
+          image: pos-fiap/tc-soat3:1.0
+          ports:
+            - containerPort: 8080
