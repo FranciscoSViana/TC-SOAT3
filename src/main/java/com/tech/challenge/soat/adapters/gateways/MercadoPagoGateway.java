@@ -29,8 +29,8 @@ public class MercadoPagoGateway implements PagamentoPort {
     private String authorization;
 
 
-    @Value("${mp.url.rota}")
-    private String urlWebhook;
+//    @Value("${mp.url.rota}")
+//    private String urlWebhook;
 
     @Override
     public PedidoModel criarPagamento(PedidoModel pedido) {

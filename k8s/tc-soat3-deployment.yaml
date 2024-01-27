@@ -9,11 +9,13 @@ spec:
       labels:
         app: tc-soat3
     spec:
+      restartPolicy: Always
       containers:
         - name: tc-soat3-container
           image: franciscosviana/tc-soat3:v2
+          imagePullPolicy: Always
           ports:
-            - containerPort: 80
+            - containerPort: 8080
           env:
             - name: DB_USER
               valueFrom:
@@ -43,8 +45,8 @@ spec:
               path: /api/actuator/health
               port: 8080
             failureThreshold: 3
-            initialDelaySeconds: 30
-            periodSeconds: 10
+            initialDelaySeconds: 60
+            periodSeconds: 20
             successThreshold: 1
             timeoutSeconds: 1
           readinessProbe:
@@ -52,8 +54,8 @@ spec:
               path: /api/actuator/health
               port: 8080
             failureThreshold: 3
-            initialDelaySeconds: 30
-            periodSeconds: 10
+            initialDelaySeconds: 60
+            periodSeconds: 20
             successThreshold: 1
             timeoutSeconds: 1
           resources:

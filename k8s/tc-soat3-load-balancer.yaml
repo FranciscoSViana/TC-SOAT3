@@ -4,7 +4,7 @@ metadata:
   name: tc-soat3-load-balancer-svc
 spec:
   selector:
-    app: tc-soat3
+    app: tc-soat3-lb
   ports:
     - protocol: TCP
       port: 80
