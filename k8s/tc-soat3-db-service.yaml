@@ -8,5 +8,4 @@ spec:
   ports:
     - protocol: TCP
       port: 3306
-      target: 3306
-  clusterIP: none
+      targetPort: 3306

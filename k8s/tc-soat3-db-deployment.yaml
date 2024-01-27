@@ -18,8 +18,8 @@ spec:
             - configMapRef:
                 name: db-tc-soat3-configmap
           volumeMounts:
-            - name: /var/lib/mysql
-              mountPath: tc-soat3-db-volume
+            - name: tc-soat3-db-volume
+              mountPath: /var/lib/mysql
       volumes:
         - name: tc-soat3-db-volume
           persistentVolumeClaim:
