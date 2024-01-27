@@ -3,6 +3,8 @@ kind: Deployment
 metadata:
   name: db-tc-soat3-deployment
 spec:
+  strategy:
+    type: Recreate
   template:
     metadata:
       name: tc-soat3-db
@@ -17,6 +19,22 @@ spec:
           envFrom:
             - configMapRef:
                 name: db-tc-soat3-configmap
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: tc-soat3-secret
+                  key: db_root_password
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: tc-soat3-secret
+                  key: db_user
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: tc-soat3-secret
+                  key: db_password
           volumeMounts:
             - name: tc-soat3-db-volume
               mountPath: /var/lib/mysql

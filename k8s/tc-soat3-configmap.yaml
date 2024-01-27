@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: tc-soat3-configmap
 data:
-  DB_HOST: tc-soat3-db-svc
+  DB_HOST: "tc-soat3-db-svc"
