@@ -3,9 +3,10 @@ kind: Service
 metadata:
   name: tc-soat3-nodeport-svc
 spec:
-  type: NodePort
-  ports:
-    - port: 8080
-      nodePort: 30000
   selector:
-    app: tc-soat3
+    app: app
+  ports:
+    - protocol: TCP
+      port: 8080
+      nodePort: 30000
+  type: NodePort

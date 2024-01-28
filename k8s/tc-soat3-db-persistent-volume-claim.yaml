@@ -2,6 +2,8 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: tc-soat3-db-pvc
+  labels:
+    name: tc-soat3-db-pvc
 spec:
   storageClassName: manual
   accessModes:

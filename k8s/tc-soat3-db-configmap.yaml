@@ -2,5 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: db-tc-soat3-configmap
+  labels:
+    app: db-tc-soat3-configmap
 data:
-  MYSQL_DATABASE: "soat3"
+  db_user: root
