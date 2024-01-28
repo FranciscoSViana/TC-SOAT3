@@ -22,18 +22,18 @@ spec:
           env:
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
-                secretKeyRef:
-                  name: tc-soat3-secret
+                configMapKeyRef:
+                  name: tc-soat3-configmap
                   key: db_root_password
             - name: MYSQL_USER
               valueFrom:
-                secretKeyRef:
-                  name: tc-soat3-secret
+                configMapKeyRef:
+                  name: tc-soat3-configmap
                   key: db_user
             - name: MYSQL_PASSWORD
               valueFrom:
-                secretKeyRef:
-                  name: tc-soat3-secret
+                configMapKeyRef:
+                  name: tc-soat3-configmap
                   key: db_password
           volumeMounts:
             - name: tc-soat3-db-volume
