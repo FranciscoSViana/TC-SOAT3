@@ -23,6 +23,9 @@ public class PagamentoMPRequest {
     @JsonProperty("payment_method_id")
     private String metodoDePagamento;
 
+    @JsonProperty("notification_url")
+    private String enderecoNotificacao;
+
     private PagadorMP payer;
 
 }

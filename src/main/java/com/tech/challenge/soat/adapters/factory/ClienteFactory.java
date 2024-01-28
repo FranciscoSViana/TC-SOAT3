@@ -4,7 +4,6 @@ import com.tech.challenge.soat.adapters.models.in.ClienteRequest;
 import com.tech.challenge.soat.domain.constants.I18n;
 import com.tech.challenge.soat.domain.exceptions.NegocioException;
 import com.tech.challenge.soat.domain.models.ClienteModel;
-import com.tech.challenge.soat.domain.models.ProdutoModel;
 import com.tech.challenge.soat.domain.providers.DataProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,7 @@ public class ClienteFactory {
 
     public ClienteModel novo(ClienteRequest clienteRequest) {
 
-        if(isNull(clienteRequest)) {
+        if (isNull(clienteRequest)) {
             throw new NegocioException(I18n.CLIENTE_NAO_PODE_SER_NULO);
         }
 

@@ -18,7 +18,7 @@ public enum TipoCategoria {
         return stream(values())
                 .filter(value -> value.name().equalsIgnoreCase(name))
                 .findFirst()
-                .orElseThrow(()-> new IllegalArgumentException(format("Categoria inválida: {}",name)));
+                .orElseThrow(() -> new IllegalArgumentException(format("Categoria inválida: {}", name)));
 
     }
 }

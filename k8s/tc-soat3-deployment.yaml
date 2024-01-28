@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tc-soat3-deployment
+  labels:
+    app: tc-soat3-deployment
+spec:
+  selector:
+    matchLabels:
+      app: app
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: app
+    spec:
+      containers:
+        - name: tc-soat3-container
+          image: franciscosviana/tc-soat3:v2
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "1024Mi"
+              cpu: "1.0"
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_HOST
+              valueFrom :
+                configMapKeyRef :
+                  name : tc-soat3-configmap
+                  key :  db_host
+
+            - name: DB_PASSWORD
+              valueFrom :
+                secretKeyRef :
+                  name : tc-soat3-secret
+                  key :  db_password
+
+            - name: DB_USERNAME
+              valueFrom :
+                configMapKeyRef :
+                  name : db-tc-soat3-configmap
+                  key :  db_user
+
+            - name: ACCESS_TOKEN_MP
+              valueFrom :
+                secretKeyRef :
+                  name : tc-soat3-secret
+                  key :  mp_access_token
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            failureThreshold: 3

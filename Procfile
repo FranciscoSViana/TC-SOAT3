@@ -1,0 +1,1 @@
+web: java -Dserver.port=$PORT -Dserver.http.timeout=1800000 -jar target/soat-0.0.1-SNAPSHOT.jar

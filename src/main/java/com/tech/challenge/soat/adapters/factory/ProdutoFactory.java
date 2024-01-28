@@ -17,13 +17,15 @@ import java.util.UUID;
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class ProdutoFactory {
 
+    private static final String PRODUTO_NAO_PODE_SER_NULO = "Produto não pode ser nulo";
+
     private final DataProvider dataProvider;
 
 
     public ProdutoModel novo(ProdutoRequest produtoRequest) {
 
         if (Objects.isNull(produtoRequest)) {
-            throw new NegocioException("Produto não pode ser nulo");
+            throw new NegocioException(PRODUTO_NAO_PODE_SER_NULO);
         }
 
         return ProdutoModel.
@@ -42,7 +44,7 @@ public class ProdutoFactory {
     public ProdutoModel atualizar(ProdutoRequest produtoRequest, ProdutoModel produtoModel) {
 
         if (Objects.isNull(produtoRequest)) {
-            throw new NegocioException("Produto não pode ser nulo");
+            throw new NegocioException(PRODUTO_NAO_PODE_SER_NULO);
         }
 
         produtoModel.setNome(produtoRequest.getNome());
@@ -51,13 +53,14 @@ public class ProdutoFactory {
         produtoModel.setImagem(Base64.getDecoder().decode(produtoRequest.getImagemBase64()));
         produtoModel.setCategoria(TipoCategoria.fromName(produtoRequest.getCategoria()));
         produtoModel.setDataHoraAlteracao(dataProvider.obterDataHoraAtual());
+
         return produtoModel;
     }
 
     public ProdutoModel delete(ProdutoModel produtoModel) {
 
         if (Objects.isNull(produtoModel)) {
-            throw new NegocioException("Produto não pode ser nulo");
+            throw new NegocioException(PRODUTO_NAO_PODE_SER_NULO);
         }
 
         produtoModel.setDataHoraAlteracao(dataProvider.obterDataHoraAtual());

@@ -38,6 +38,9 @@ public class PedidoModel {
     private LocalTime tempoPreparo;
 
     private String codigoPix;
+
+    private String idPagamentoMP;
+
     @Lob
     @Basic(fetch = FetchType.LAZY)
     @Column(columnDefinition = "LONGBLOB")
@@ -49,10 +52,11 @@ public class PedidoModel {
             joinColumns = @JoinColumn(name = "pedido_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "produto_id", referencedColumnName = "id")
     )
+
     private List<ProdutoModel> produtos;
 
-    public void adicionarProdutoAoPedido(ProdutoModel produto){
+    public void adicionarProdutoAoPedido(ProdutoModel produto) {
         this.produtos.add(produto);
-        this.preco = this.preco.add(produto.getPreco()) ;
+        this.preco = this.preco.add(produto.getPreco());
     }
 }

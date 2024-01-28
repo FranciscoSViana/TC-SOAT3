@@ -26,4 +26,5 @@ public class PedidoResponse {
     private LocalTime tempoPreparo;
     private String codigoPix;
     private String qrCode;
+    private String idPagamentoMP;
 }

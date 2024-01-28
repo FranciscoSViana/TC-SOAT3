@@ -47,4 +47,3 @@ insert into pedido_produto(pedido_id, produto_id) VALUES ('3', '4');
 insert into pedido_produto(pedido_id, produto_id) VALUES ('3', '8');
 insert into pedido_produto(pedido_id, produto_id) VALUES ('3', '11');
 insert into pedido_produto(pedido_id, produto_id) VALUES ('3', '20');
-

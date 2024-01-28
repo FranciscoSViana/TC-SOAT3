@@ -12,7 +12,8 @@ public class ArchUnitLayerBuilder {
 
     private static final String INFRA_LAYER_NAME = "infra";
 
-    private ArchUnitLayerBuilder() {}
+    private ArchUnitLayerBuilder() {
+    }
 
     public static ArchUnitLayer createDomainLayer() {
         var domainLayers = new HashSet<String>();
