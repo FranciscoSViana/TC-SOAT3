@@ -33,12 +33,12 @@ Lista de arquivos YAML com recursos do k8s:
 03-tc-soat3-persistent-volume-db.yaml: Mapeamento da PV para os arquivos de banco de dados;
 04-tc-soat3-persistent-volume-claim.yaml: Mapeamento da PVC com configuração de claims para volumes do banco de dados;
 05-tc-soat3-configmap.yaml: ConfigMap com chaves relacionadas a integração do microserviço;
-06-tc-soat3-configmap-db.yaml: ConfigMap com chaves relacionadas a integração do banco de dados;
-07-tc-soat3-service-db.yaml: Mapeamento das portas para acesso ao service de banco de dados;
+06-tc-soat3-db-configmap.yaml: ConfigMap com chaves relacionadas a integração do banco de dados;
+07-tc-soat3-db-service.yaml: Mapeamento das portas para acesso ao service de banco de dados;
 08-tc-soat3-service-load-balancer.yaml: Mapeamento das portas para acesso ao service LoadBalancer do microserviço;
 09-tc-soat3-db-deployment.yaml: Deployment para disponibilização do banco de dados;
 10-tc-soat3-deployment.yaml: Deployment para disponibilização do microserviço;
-10-tc-soat3-autoscale.yaml: HPA com parametrização de quantidade de réplicas e indicador para escalabilidade.
+11-tc-soat3-autoscale.yaml: HPA com parametrização de quantidade de réplicas e indicador para escalabilidade.
 
 Importante! Os arquivos devem ser aplicados ao k8s na ordem que estão mapeados.
 
