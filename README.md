@@ -25,6 +25,29 @@ Após executar o comando acima, a aplicação estará disponível em http://loca
 ## Documentação Swagger da API
 A documentação em padrão Swagger está disponível em http://localhost:8080/swagger-ui/index.html.
 
+Recursos provisionados no k8s
+Lista de arquivos YAML com recursos do k8s:
+
+01-tc-soat3-secrets.yaml: Armazenamento das secrets de banco de dados e access_token para a API do MP;
+02-tc-soat3-storageclass.yaml
+03-tc-soat3-persistent-volume-db.yaml: Mapeamento da PV para os arquivos de banco de dados;
+04-tc-soat3-persistent-volume-claim.yaml: Mapeamento da PVC com configuração de claims para volumes do banco de dados;
+05-tc-soat3-configmap.yaml: ConfigMap com chaves relacionadas a integração do microserviço;
+06-tc-soat3-configmap-db.yaml: ConfigMap com chaves relacionadas a integração do banco de dados;
+07-tc-soat3-service-db.yaml: Mapeamento das portas para acesso ao service de banco de dados;
+08-tc-soat3-service-load-balancer.yaml: Mapeamento das portas para acesso ao service LoadBalancer do microserviço;
+09-tc-soat3-db-deployment.yaml: Deployment para disponibilização do banco de dados;
+10-tc-soat3-deployment.yaml: Deployment para disponibilização do microserviço;
+10-tc-soat3-autoscale.yaml: HPA com parametrização de quantidade de réplicas e indicador para escalabilidade.
+
+Importante! Os arquivos devem ser aplicados ao k8s na ordem que estão mapeados.
+
+Após provisionamento dos recursos, a aplicação estará disponível no endereço associado a NAT configurada no ambiente provido do k8s. O contexto da aplicação está definida como /api.
+
+Após aplicar, dar o seguinte comando:
+
+kubectl port-forward service/tc-soat3-load-balancer-svc 8080:8080
+
 
 # Endpoints disponíveis por recurso
 Abaixo, segue a lista de endpoints disponíveis por recurso e exemplos de requisição.

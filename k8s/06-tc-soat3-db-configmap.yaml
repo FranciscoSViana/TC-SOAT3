@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: db-tc-soat3-configmap
 data:
-  MYSQL_DATABASE: soat3
+  MYSQL_DATABASE: "soat3"

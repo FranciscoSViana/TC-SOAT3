@@ -3,11 +3,11 @@ kind: Service
 metadata:
   name: tc-soat3-db-svc
 spec:
+  type: NodePort
   selector:
     app: tc-soat3-db
   ports:
     - protocol: TCP
       port: 3306
       targetPort: 3306
-      nodePort: 30001
-  type: NodePort
+      nodePort: 32001

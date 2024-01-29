@@ -13,8 +13,7 @@ spec:
         - name: tc-soat3-container
           image: franciscosviana/tc-soat3:v2
           ports:
-            - containerPort: 80
-
+            - containerPort: 8080
           env:
             - name: DB_HOST
               valueFrom:
@@ -44,18 +43,6 @@ spec:
           envFrom:
             - configMapRef:
                 name: tc-soat3-configmap
-          livenessProbe:
-            httpGet:
-              path: /api/actuator/health
-              port: 30000
-            initialDelaySeconds: 60
-            periodSeconds: 00
-          readinessProbe:
-            httpGet:
-              path: /api/actuator/health
-              port: 30000
-            initialDelaySeconds: 30
-            periodSeconds: 10
           resources:
             requests:
               cpu: 1500m
