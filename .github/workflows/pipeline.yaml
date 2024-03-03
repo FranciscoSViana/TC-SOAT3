@@ -1,7 +1,7 @@
 name: Deploy
 
 on:
-  pull_request:
+  push:
     branches:
       - master
 
@@ -11,4 +11,3 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-        
