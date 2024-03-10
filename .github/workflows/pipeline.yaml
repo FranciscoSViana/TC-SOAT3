@@ -27,9 +27,9 @@ jobs:
       - name: Login Docker Hub
         run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
       - name: Build Docker Image
-        run: docker build -t franciscosviana/tc-soat3:v4 .
+        run: docker build -t franciscosviana/tc-soat3:v3 .
       - name: Push Image Docker
-        run: docker push franciscosviana/tc-soat3:v4
+        run: docker push franciscosviana/tc-soat3:v3
 
   deploy:
     runs-on: ubuntu-latest
