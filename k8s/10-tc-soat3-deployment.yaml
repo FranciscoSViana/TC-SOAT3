@@ -11,34 +11,34 @@ spec:
     spec:
       containers:
         - name: tc-soat3-container
-          image: franciscosviana/tc-soat3:v3
+          image: franciscosviana/tc-soat3:v3.5
           ports:
             - containerPort: 8080
           env:
             - name: DB_HOST
               valueFrom:
                 configMapKeyRef:
-                  name: tc-soat3-configmap
+                  name: dbhost
                   key: db_host
             - name: DB_USER
               valueFrom:
                 secretKeyRef:
-                  name: tc-soat3-secret
+                  name: dbuser
                   key: db_user
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: tc-soat3-secret
+                  name: dbpassword
                   key: db_password
             - name: DB_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: tc-soat3-secret
+                  name: dbrootpassword
                   key: db_root_password
             - name: MP_ACCESS_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: tc-soat3-secret
+                  name: mpaccesstoken
                   key: mp_access_token
           envFrom:
             - configMapRef:

@@ -27,9 +27,9 @@ jobs:
       - name: Login Docker Hub
         run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
       - name: Build Docker Image
-        run: docker build -t franciscosviana/tc-soat3:v3 .
+        run: docker build -t franciscosviana/tc-soat3:v3.5 .
       - name: Push Image Docker
-        run: docker push franciscosviana/tc-soat3:v3
+        run: docker push franciscosviana/tc-soat3:v3.5
 
   deploy:
     runs-on: ubuntu-latest
@@ -55,11 +55,11 @@ jobs:
 
       - run: kubectl get svc
 
-      - run: kubectl create secret generic tc-soat3-configmap --from-literal=DB_HOST= ${{ secrets.DB_HOST }}
-      - run: kubectl create secret generic tc-soat3-secret --from-literal=DB_USER= ${{ secrets.DB_USER }}
-      - run: kubectl create secret generic tc-soat3-secret --from-literal=DB_PASSWORD= ${{ secrets.DB_PASSWORD }}
-      - run: kubectl create secret generic tc-soat3-secret --from-literal=DB_ROOT_PASSWORD= ${{ secrets.DB_ROOT_PASSWORD }}
-      - run: kubectl create secret generic tc-soat3-secret --from-literal=MP_ACCESS_TOKEN= ${{ secrets.MP_ACCESS_TOKEN }}
+      - run: kubectl create secret generic dbhost --from-literal=DB_HOST= ${{ secrets.DB_HOST }}
+      - run: kubectl create secret generic dbuser --from-literal=DB_USER= ${{ secrets.DB_USER }}
+      - run: kubectl create secret generic dbpassword --from-literal=DB_PASSWORD= ${{ secrets.DB_PASSWORD }}
+      - run: kubectl create secret generic dbrootpassword --from-literal=DB_ROOT_PASSWORD= ${{ secrets.DB_ROOT_PASSWORD }}
+      - run: kubectl create secret generic mpaccesstoken --from-literal=MP_ACCESS_TOKEN= ${{ secrets.MP_ACCESS_TOKEN }}
 
       - name: Deploy to EKS
         run: |
