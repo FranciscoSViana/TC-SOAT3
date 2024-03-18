@@ -36,6 +36,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        if: github.event_name == 'pull_request'
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v3
@@ -51,10 +52,11 @@ jobs:
 #        id: install
       - run: aws sts get-caller-identity
 
-      - run: aws eks update-kubeconfig --region us-east-1 --name soat3-eks-wvwS0e5x
+      - run: aws eks update-kubeconfig --region us-east-1 --name soat3-eks-54ZivE2V
 
       - run: kubectl get svc
 
       - name: Deploy to EKS
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: |
           kubectl apply -f ./k8s/

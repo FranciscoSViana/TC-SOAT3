@@ -5,4 +5,4 @@ metadata:
   labels:
     app: tc-soat3-configmap
 data:
-  db_host: 'jdbc:mysql://tc-soat3-db-svc/soat3?&createDatabaseIfNotExist=true'
+  db_host: 'jdbc:mysql://bd-soat3.c3coaokectby.us-east-1.rds.amazonaws.com:3306/soat3?&createDatabaseIfNotExist=true'
