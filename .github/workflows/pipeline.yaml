@@ -51,18 +51,4 @@ jobs:
 
       - name: Deploy to EKS
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: |
-          kubectl apply \
-          -f k8s/01-tc-soat3-secrets.yaml \
-          -f k8s/02-tc-soat3-storageclass.yaml \
-          -f k8s/03-tc-soat3-db-persistent-volume..yaml \
-          -f k8s/04-tc-soat3-db-persistent-volume-claim..yaml \
-          -f k8s/05-tc-soat3-configmap.yaml \
-          -f k8s/06-tc-soat3-db-configmap.yaml \
-          -f k8s/07-tc-soat3-db-service.yaml \
-          -f k8s/08-tc-soat3-load-balancer.yaml \
-          -f k8s/09-tc-soat3-db-deployment.yaml \
-          -f k8s/10-tc-soat3-deployment.yaml \
-          -f k8s/11-tc-soat3-autoscale.yaml
-          
-          
+        run: kubectl apply -f k8s/
