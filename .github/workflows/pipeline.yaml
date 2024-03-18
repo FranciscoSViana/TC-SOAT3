@@ -47,6 +47,9 @@ jobs:
 
       - name: Install kubectl
         uses: azure/setup-kubectl@v3
+#        with:
+#          version: 'v4.0.0' # default is latest stable
+#        id: install
       - run: aws sts get-caller-identity
 
       - run: aws eks update-kubeconfig --region us-east-1 --name soat3-eks-54ZivE2V
@@ -54,6 +57,6 @@ jobs:
       - run: kubectl get svc
 
       - name: Deploy to EKS
-        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: |
-          kubectl apply -f ./k8s
+          kubectl apply -f ./k8s/
