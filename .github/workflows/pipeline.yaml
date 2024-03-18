@@ -56,4 +56,4 @@ jobs:
       - name: Deploy to EKS
         if: github.ref == 'refs/heads/master' && github.event_name == 'push'
         run: |
-          kubectl apply -f ./k8s/
+          kubectl apply -f ./k8s
