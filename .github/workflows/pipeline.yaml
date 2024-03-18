@@ -51,4 +51,4 @@ jobs:
 
       - name: Deploy to EKS
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: kubectl apply -f ./
+        run: kubectl apply -f /*.yaml
